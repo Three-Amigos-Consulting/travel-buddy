@@ -15,6 +15,7 @@ To install this package on your local system:
 ## Architecture
 This project uses the following technologies:
 * JavaScript
+* jQuery
 * Node.js
 * cors: ```npm i cors```
 * dotenv: ```npm i dotenv```
@@ -31,8 +32,8 @@ PLACE SCHEMEA HERE
 ## Change Log
 
 10-01-2018 10:00am - (DC/AF/RM) - Finsihed standup and presented concepts to approval team.
-10-01-2018 11:00am - (DC) - Setup GitHub Organization and created repo and project workflows.
-10-01-2018 
+10-01-2018 11:00am - (DC) - Setup GitHub Organization and created repo and project workflow centers
+10-01-2018 2:30pm (DC) - Initial scaffolding finished.  Pushed to master with development branch created.
 
 
 ## Credits and Collaborations
