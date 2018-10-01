@@ -1,0 +1,32 @@
+{
+  "name": "travel-buddy",
+  "version": "1.0.0",
+  "description": "Full-stack Web Applicaiton to help find travel destinations",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Three-Amigos-Consulting/travel-buddy.git"
+  },
+  "keywords": [
+    "travel",
+    "currency"
+  ],
+  "author": "David Chambers, Andy Fields, Ryan Milton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Three-Amigos-Consulting/travel-buddy/issues"
+  },
+  "homepage": "https://github.com/Three-Amigos-Consulting/travel-buddy#readme",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "method-override": "^3.0.0",
+    "pg": "^7.4.3",
+    "superagent": "^4.0.0-beta.5"
+  }
+}
