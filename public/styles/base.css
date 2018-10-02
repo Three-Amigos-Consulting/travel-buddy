@@ -1,8 +1,12 @@
+/* Google fonts from  */
+@import url('https://fonts.googleapis.com/css?family=Baloo+Tamma|Roboto');
+
 body {
   Background-color: orange;
   color: navy;
+  font-family: 'Roboto', sans-serif; 
 }
 
-h1 {
-  font-size:150%;
+header {
+  font-family: 'Baloo Tamma', cursive;
 }
