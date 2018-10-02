@@ -31,6 +31,18 @@ app.use(express.urlencoded({ extended: true }));
 // Tell express to use EJS files
 app.set('view engine', 'ejs');
 
+
+// Method Override
+app.use(methodOverride((request, response) => {
+  if (request.body && typeof request.body === 'object' && '_method' in request.body) {
+    // look in urlencoded POST bodies and delete it
+    let method = request.body._method;
+    delete request.body._method;
+    return method;
+  }
+}))
+
+
 // ++++++++++++++++
 // Routes to listen
 // ++++++++++++++++
@@ -56,5 +68,3 @@ function renderHomePage(request, response) { response.render('index'); }
 // function processErrors(error, response) {
 //     response.render('pages/error', { errorResult: error })
 // }
-
-
