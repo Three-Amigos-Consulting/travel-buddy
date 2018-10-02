@@ -1,6 +1,14 @@
 /* BEGIN MOVILE SCREEN */
 @media only screen and (max-wdith: 480px) {
 
+  header{
+    border: 2px solid black;
+    font-family: 'Baloo Tamma', cursive;
+  }
+
+  h1 {
+    font-size: 100%;
+  }
 
 
 
@@ -15,7 +23,15 @@ BEGIN TABLET/DESKTOP SCREENS
 
 @media only screen and (min-wdith: 481px) {
   
-
+  body {
+    Background-color: orange;
+    color: navy;
+    font-family: 'Roboto', sans-serif; 
+  }
+  
+  header {
+    font-family: 'Baloo Tamma', cursive;
+  }
 
   
 }
