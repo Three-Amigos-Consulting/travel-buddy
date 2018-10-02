@@ -27,14 +27,29 @@ This project uses the following technologies:
 
 ### Database SCHEMA
 
-PLACE SCHEMEA HERE
+Database Schema can be found in [travel_budy_schema.sql](travel_budy_schema.sql)
 
 ## Change Log
 
 10-01-2018 10:00am - (DC/AF/RM) - Finsihed standup and presented concepts to approval team.
 10-01-2018 11:00am - (DC) - Setup GitHub Organization and created repo and project workflow centers
-10-01-2018 2:30pm (DC) - Initial scaffolding finished.  Pushed to master with development branch created.
+10-01-2018 1:00pm - (AF) - Began to find data on Big Mac Index, and added this data with Currency Exchange Rate data.
+10-01-2018 2:30pm - (DC) - Initial scaffolding finished.  Pushed to master with development branch created.
+10-01-2018 - ALL DAY - (RM) - API response coming back properly from rest countries API, google maps, exchange rates api, fixer.io, google places, and assisted Andy with structuring the SQL database.
+
+10-02-2018 - 9:00am - (DC) Finished wireframe drawings for Results/My Trips, Detail, and Index. Purchased travel-buddy.website.
+10-02-2018
+10-02-2018
+10-02-2018
+10-02-2018
+10-02-2018
+10-02-2018
+10-02-2018
+10-02-2018
+10-02-2018
+10-02-2018
+
 
 
 ## Credits and Collaborations
-* 
+* APIS GO IN THIS SECTION
