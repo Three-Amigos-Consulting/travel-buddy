@@ -1,16 +1,21 @@
 /* BEGIN MOVILE SCREEN */
-@media only screen and (max-wdith: 480px) {
+@media screen and (max-width: 480px) {
+
+  body {
+    background-image: src('../images/passport-bkg.jpg');
+    background-color: lightskyblue;
+  }
 
   header{
+    Background-color: orange;
+    color: navy;
     border: 2px solid black;
     font-family: 'Baloo Tamma', cursive;
   }
 
   h1 {
-    font-size: 100%;
+    font-size: 200%;
   }
-
-
 
 
 }
@@ -21,11 +26,11 @@
 BEGIN TABLET/DESKTOP SCREENS
 ============================ */
 
-@media only screen and (min-wdith: 481px) {
+@media screen and (min-wdith: 481px) {
   
   body {
-    Background-color: orange;
-    color: navy;
+    Background-color: white;
+    color: red;
     font-family: 'Roboto', sans-serif; 
   }
   
