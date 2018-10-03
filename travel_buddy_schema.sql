@@ -1,5 +1,6 @@
 -- BASIC STRUCTURE -- NEEDS FINE TUNING
 -- TODO:
+
 CREATE TABLE IF NOT EXISTS countries (
 id SERIAL PRIMARY KEY,
 country_name VARCHAR(255),
@@ -10,26 +11,18 @@ exchange_rate NUMERIC(9,3),
 local_bmi NUMERIC(9,3),
 usa_bmi NUMERIC(4,2),
 flag_url VARCHAR(255),
-created_date BIGINT
-);
+created_date BIGINT);
 
 CREATE TABLE IF NOT EXISTS mytrips (
-id SERIAL PRIMARY KEY,
-latitude NUMERIC(8,6),
-longitude NUMERIC(9,6),
+id SERIAL PRIMARY KEY, 
+latitude NUMERIC(8, 6), 
+longitude NUMERIC(9, 6), 
 country foreignkey
 );
 
 
 -- TODO:
--- USE THIS FORMAT FOR CREATING THE COUNTRY TABLE
-INSERT INTO <table> (<column 1>, <column 2>, ...) 
-             VALUES 
-                    (<value 1>, <value 2>, ...),
-                    (<value 1>, <value 2>, ...),
-                    (<value 1>, <value 2>, ...);
 
--- SCHEMA STRUCTURE
 INSERT INTO countries
 (country_name, country_code, currency_code, exchange_rate, local_bmi, usa_bmi)
 VALUES
