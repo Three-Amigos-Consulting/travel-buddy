@@ -120,6 +120,8 @@ function getCapitalsAndFlags(data) {
 }
 
 function getSQL() {
+  console.log('STARTING THE SQL PULL');
+
   const SQL = `SELECT * FROM countries;`;
 
   let countriesDB = [];
