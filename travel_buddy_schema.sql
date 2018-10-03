@@ -1,13 +1,17 @@
 -- BASIC STRUCTURE -- NEEDS FINE TUNING
 -- TODO:
-CREATE TABLE IF NOT EXISTS country (
-id SERIAL PRIMARY KEY, 
-country VARCHAR(255), 
-currencycode CHAR(3), 
-rate NUMERIC(9, 3), 
-big-mac in local currency NUMERIC(9, 3), 
-big-mac-idx cost / rate = usd NUMERIC(4, 2)
-);
+
+CREATE TABLE IF NOT EXISTS countries (
+id SERIAL PRIMARY KEY,
+country_name VARCHAR(255),
+capital CHAR(50),
+country_code CHAR(3),
+currency_code CHAR(3),
+exchange_rate NUMERIC(9,3),
+local_bmi NUMERIC(9,3),
+usa_bmi NUMERIC(4,2),
+flag_url VARCHAR(255),
+created_date BIGINT);
 
 CREATE TABLE IF NOT EXISTS mytrips (
 id SERIAL PRIMARY KEY, 
@@ -18,7 +22,6 @@ country foreignkey
 
 
 -- TODO:
--- WE NEED TO DISCUSS usa_bmi
 
 INSERT INTO countries
 (country_name, country_code, currency_code, exchange_rate, local_bmi, usa_bmi)
