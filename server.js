@@ -53,7 +53,7 @@ app.set('view engine', 'ejs');
 
 // index.ejs
 app.get('/', getSQL);
-app.get('/', renderHomePage);
+// app.get('/', renderHomePage);
 
 //Set the catch all route
 app.get('*', (request, response) => response.status(404).render('pages/404-error.ejs'));
@@ -67,14 +67,14 @@ app.listen(PORT, () => console.log(`(TRAVEL BUDDY) listening on: ${PORT}`));
 // +++++++++++++++++++++++++++++++++
 
 function Countries(data) {
-  this.id = data.id
-  this.name = data.country_name,
-  this.capital = data.capital,
-  this.country_code = data.country_code,
-  this.currency_code = data.currency_code,
-  this.exchange_rate = data.exchange_rate,
-  this.local_bmi = data.local_bmi,
-  this.usa_bmi = data. usa_bmi,
+  this.id = data.id;
+  this.name = data.country_name;
+  this.capital = data.capital;
+  this.country_code = data.country_code;
+  this.currency_code = data.currency_code;
+  this.exchange_rate = data.exchange_rate;
+  this.local_bmi = data.local_bmi;
+  this.usa_bmi = data.usa_bmi;
   this.flag = data.flag_url
 }
 
@@ -84,6 +84,7 @@ function Countries(data) {
 
 function renderHomePage(request, response) { response.render('index'); }
 
+// Get the API info for currency from fixer.io and returns an array of arrays with currency code and exchange rate in each array.
 function getCurrency() {
   const url = `http://data.fixer.io/api/latest?access_key=${process.env.FIXER_API_KEY}&base=USD`;
   superagent(url)
@@ -92,20 +93,57 @@ function getCurrency() {
     })
 }
 
-function getSQL(request, response){
+// Get API info from RESTcountries to populate capital and flag_url info.  The function will receive information from our SQL database to limit the countries being requested.
+
+function getCapitalsAndFlags(data) {
+  // For each country code we will add the code to a variable that appends to the end of the Restcountries API.
+
+  let countryCodes = '';
+
+  data.forEach(country => {
+    countryCodes += `${country.country_code};`;
+  })
+
+  const url = `https://restcountries.eu/rest/v2/alpha?codes=${countryCodes}`;
+
+  superagent(url)
+    .then(result => {
+      let capitalArray = [];
+      result.forEach(country => {
+        capitalArray.push([country.alpha3Code, country.capital, country.flag]);
+      })
+
+      console.log(`+++++++++++++++++++++++`);
+      console.log(capitalArray);
+      console.log(`+++++++++++++++++++++++`);
+
+    })
+    .catch(err => processErrors(err));
+
+}
+
+
+
+function getSQL(request, response) {
   const SQL = `SELECT * FROM countries;`;
 
   console.log('inside the getSQL function');
   client.query(SQL)
     .then(result => {
-      let arrObj = result.rows;
-      let arrArr = getCurrency();
-      arrObj.forEach(country => {
-        let xx = arrArr.find(element => element[0] === country.currency_code)
-        country.exchange_rate = xx[1];
-        country.USA_bmi = country.local_bmi/country.exchange_rate;
-      })
-      console.log(':)');
+      console.log('FIRST SQL.then');
+      const ratesArray = getCurrency();
+      const capsAndFlags = getCapitalsAndFlags(result);
+
+
+      // let arrObj = result.rows;
+      // let arrArr = getCurrency();
+      // arrObj.forEach(country => {
+      //   let xx = arrArr.find(element => element[0] === country.currency_code)
+      //   country.exchange_rate = xx[1];
+      //   country.USA_bmi = country.local_bmi / country.exchange_rate;
+
+
+      // })
     })
     .catch(err => processErrors(err, response));
 }
