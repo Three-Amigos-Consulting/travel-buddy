@@ -1,13 +1,17 @@
 -- BASIC STRUCTURE -- NEEDS FINE TUNING
 -- TODO:
-CREATE TABLE IF NOT EXISTS country (
-id SERIAL PRIMARY KEY, 
-country VARCHAR(255), 
-currencycode CHAR(3), 
-rate NUMERIC(9, 3), 
-big-mac in local currency NUMERIC(9, 3), 
-big-mac-idx cost / rate = usd NUMERIC(4, 2)
-);
+
+CREATE TABLE IF NOT EXISTS countries (
+id SERIAL PRIMARY KEY,
+country_name VARCHAR(255),
+capital CHAR(50),
+country_code CHAR(3),
+currency_code CHAR(3),
+exchange_rate NUMERIC(9,3),
+local_bmi NUMERIC(9,3),
+usa_bmi NUMERIC(4,2),
+flag_url VARCHAR(255),
+created_date BIGINT);
 
 CREATE TABLE IF NOT EXISTS mytrips (
 id SERIAL PRIMARY KEY, 
@@ -18,7 +22,6 @@ country foreignkey
 
 
 -- TODO:
--- WE NEED TO DISCUSS usa_bmi
 
 INSERT INTO countries
 (country_name, country_code, currency_code, exchange_rate, local_bmi, usa_bmi)
@@ -42,7 +45,7 @@ VALUES
 ('Chile', 'CHL', 'CLP', 652.52, 2642.71, 4.05), 
 ('Costa Rica', 'CRI', 'CRC', 563.909, 2272.55, 4.03), 
 ('South Korea', 'KOR', 'KRW', 1134.217, 4570.89, 4.03), 
-('United Arab Emirates', 'ARE', 'AED', 3.672, 13.99, 3.81), 
+('United Arab Emirates', 'ARE', 'AED', 3.672, 13.99, 3.81),
 ('Sri Lanka', 'LKA', 'LKR', 159.8, 581.67, 3.64), 
 ('Thailand', 'THA', 'THB', 33.359, 119.76, 3.59), 
 ('Honduras', 'HND', 'HNL', 23.922, 84.68, 3.54), 
