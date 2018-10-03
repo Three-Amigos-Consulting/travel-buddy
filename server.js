@@ -7,7 +7,7 @@
 //Required Dependencies
 const express = require('express');
 const superagent = require('superagent');
-const cors = require('cors');
+// const cors = require('cors');
 const pg = require('pg');
 
 require('dotenv').config();
@@ -82,21 +82,16 @@ function Countries(data) {
 // Helper functions
 // +++++++++++++++++++++++++++++++++
 
-function renderHomePage(request, response) { response.render('index'); }
+// function renderHomePage(request, response) { response.render('index'); }
 
 // Get the API info for currency from fixer.io and returns an array of arrays with currency code and exchange rate in each array.
 function getCurrency() {
   const url = `http://data.fixer.io/api/latest?access_key=${process.env.FIXER_API_KEY}&base=USD`;
 
-  console.log(`+++++++++++++++++++++++`);
-  console.log('fixer.io: ', url);
-  console.log(`+++++++++++++++++++++++`);
-
   return superagent(url)
     .then(result => {
-      let newArray = Object.entries(result.body.rates);
-      console.log(newArray);
-      return newArray;
+      let ratesArray = Object.entries(result.body.rates);
+      return ratesArray;
     })
 }
 
@@ -105,9 +100,9 @@ function getCurrency() {
 function getCapitalsAndFlags(data) {
   // For each country code we will add the code to a variable that appends to the end of the Restcountries API.
 
-  // console.log(`%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%`);
-  // console.log('DATA from SQL', data);
-  // console.log(`%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%`);
+  // console.log(`+++++++++++++++++++++++\n\n`);
+  // console.log('RETRIEVING CAPITALS AND FLAGS');
+  // console.log(`\n\n+++++++++++++++++++++++`);
 
   let countryCodes = '';
 
@@ -117,59 +112,76 @@ function getCapitalsAndFlags(data) {
 
   const url = `https://restcountries.eu/rest/v2/alpha?codes=${countryCodes}`;
 
-  superagent(url)
+  return superagent(url)
     .then(result => {
       let capitalArray = [];
-      result.forEach(country => {
+      result.body.forEach(country => {
         capitalArray.push([country.alpha3Code, country.capital, country.flag]);
       })
-
-      console.log(`+++++++++++++++++++++++`);
-      console.log(capitalArray);
-      console.log(`+++++++++++++++++++++++`);
-
+      return capitalArray;
     })
     .catch(err => processErrors(err));
-
 }
 
-
-
-function getSQL(request, response) {
+function getSQL() {
   const SQL = `SELECT * FROM countries;`;
 
-  const ratesArray = getCurrency()
-    .then(client.query(SQL)
-      .then(result => {
+  let countriesDB = [];
+  let currency = [];
+  let capitalsAndFlags = [];
 
-        console.log(`+++++++++++++++++++++++`);
-        console.log('ratesArray: ', ratesArray);
-        console.log(`+++++++++++++++++++++++`);
+  client.query(SQL)
+    .then(results => countriesDB = results.rows)
+    .then(countries => getCapitalsAndFlags(countries)
+      .then(capsAndFlags => capitalsAndFlags = capsAndFlags))
+    .then(getCurrency()
+      .then(rates => currency = rates))
+    .catch(err => processErrors(err))
+    .then(() => {
 
-        const capsAndFlags = getCapitalsAndFlags(result.rows);
+      countriesDB.forEach(country => {
+        let rate = currency.find(value => value[0] === country.currency_code);
+        console.log('new rate', rate)
+        country.exchange_rate = rate[1];
 
-        console.log(`+++++++++++++++++++++++`);
-        console.log('capsAndFlags: ', capsAndFlags);
-        console.log(`+++++++++++++++++++++++`);
+        let capitalFlag = capitalsAndFlags.find(value => value[0] === country.country_code);
 
-        // let arrObj = result.rows;
-        // let arrArr = getCurrency();
-        // arrObj.forEach(country => {
-        //   let xx = arrArr.find(element => element[0] === country.currency_code)
-        //   country.exchange_rate = xx[1];
-        //   country.USA_bmi = country.local_bmi / country.exchange_rate;
+        country.capital = capitalFlag[1];
+        country.flag_url = capitalFlag[2];
 
+        console.log('after', country.capital, country.flag_url);
 
-        // })
+        console.log('NEW BMI', country.country_name, country.local_bmi / country.exchange_rate);
+
       })
-      .catch(err => processErrors(err, response))
-    )
-    .catch(err => processErrors(err, response));
+    });
 
+
+
+
+  // .then(result => {
+
+  // getCurrency()
+
+  // getCapitalsAndFlags(result.rows)
+  // .then(result => {
+
+
+  // let arrObj = result.rows;
+  // let arrArr = getCurrency();
+  // arrObj.forEach(country => {
+  //   let xx = arrArr.find(element => element[0] === country.currency_code)
+  //   country.exchange_rate = xx[1];
+  //   country.USA_bmi = country.local_bmi / country.exchange_rate;
+
+
+  // })
+  // })
+  //   .catch(err => processErrors(err, response));
 }
 
 
-// Error Handler
+// // Error Handler
 function processErrors(error, response) {
-  response.render('pages/error', { errorResult: error })
+  response.render('pages/404-error', { errorResult: error })
 }
