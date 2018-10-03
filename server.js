@@ -25,7 +25,6 @@ app.use(express.urlencoded({ extended: true }));
 
 //Start database connection
 const client = new pg.Client(process.env.DATABASE_URL);
-// console.log(client);
 client.connect();
 
 client.on('error', err => console.error(err));
@@ -49,8 +48,6 @@ app.set('view engine', 'ejs');
 // Routes to listen
 // ++++++++++++++++
 
-// console.log(client.query(SQL));
-
 // index.ejs
 app.get('/', getSQL);
 // app.get('/', renderHomePage);
@@ -68,15 +65,17 @@ app.listen(PORT, () => console.log(`(TRAVEL BUDDY) listening on: ${PORT}`));
 
 function Countries(data) {
   this.id = data.id;
-  this.name = data.country_name;
+  this.country_name = data.country_name;
   this.capital = data.capital;
   this.country_code = data.country_code;
   this.currency_code = data.currency_code;
   this.exchange_rate = data.exchange_rate;
   this.local_bmi = data.local_bmi;
   this.usa_bmi = data.usa_bmi;
-  this.flag = data.flag_url
+  this.flag_url = data.flag_url
 }
+
+Countries.allCountries = [];
 
 // +++++++++++++++++++++++++++++++++
 // Helper functions
@@ -99,10 +98,6 @@ function getCurrency() {
 
 function getCapitalsAndFlags(data) {
   // For each country code we will add the code to a variable that appends to the end of the Restcountries API.
-
-  // console.log(`+++++++++++++++++++++++\n\n`);
-  // console.log('RETRIEVING CAPITALS AND FLAGS');
-  // console.log(`\n\n+++++++++++++++++++++++`);
 
   let countryCodes = '';
 
@@ -130,6 +125,7 @@ function getSQL() {
   let currency = [];
   let capitalsAndFlags = [];
 
+
   client.query(SQL)
     .then(results => countriesDB = results.rows)
     .then(countries => getCapitalsAndFlags(countries)
@@ -138,47 +134,32 @@ function getSQL() {
       .then(rates => currency = rates))
     .catch(err => processErrors(err))
     .then(() => {
-
       countriesDB.forEach(country => {
+        // merge current rates into country data
         let rate = currency.find(value => value[0] === country.currency_code);
-        console.log('new rate', rate)
         country.exchange_rate = rate[1];
 
+        // merge capitals and flags into data
         let capitalFlag = capitalsAndFlags.find(value => value[0] === country.country_code);
-
         country.capital = capitalFlag[1];
         country.flag_url = capitalFlag[2];
 
-        console.log('after', country.capital, country.flag_url);
+        //calculate Big Mac Index for USD in local country
+        country.usa_bmi = country.local_bmi / country.exchange_rate;
 
-        console.log('NEW BMI', country.country_name, country.local_bmi / country.exchange_rate);
-
+        //create an instance of each country with the constructor
+        Countries.allCountries.push(new Countries(country));
       })
-    });
+    })
+    .then(() => sqlDisplay())
+    .catch(err => processErrors(err));
 
-
-
-
-  // .then(result => {
-
-  // getCurrency()
-
-  // getCapitalsAndFlags(result.rows)
-  // .then(result => {
-
-
-  // let arrObj = result.rows;
-  // let arrArr = getCurrency();
-  // arrObj.forEach(country => {
-  //   let xx = arrArr.find(element => element[0] === country.currency_code)
-  //   country.exchange_rate = xx[1];
-  //   country.USA_bmi = country.local_bmi / country.exchange_rate;
-
-
-  // })
-  // })
-  //   .catch(err => processErrors(err, response));
 }
+
+function sqlDisplay() {
+  console.log('\n\n++++++++++++++++++++++++++++++\n\n', Countries.allCountries);
+}
+
 
 
 // // Error Handler
