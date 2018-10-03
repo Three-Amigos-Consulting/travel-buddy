@@ -73,6 +73,7 @@ function Countries(data) {
   this.local_bmi = data.local_bmi;
   this.usa_bmi = data.usa_bmi;
   this.flag_url = data.flag_url
+  this.created_date = Date.now();
 }
 
 Countries.allCountries = [];
@@ -151,13 +152,27 @@ function getSQL() {
         Countries.allCountries.push(new Countries(country));
       })
     })
-    .then(() => sqlDisplay())
+    .then(() => updateCountryDb())
     .catch(err => processErrors(err));
 
 }
 
-function sqlDisplay() {
-  console.log('\n\n++++++++++++++++++++++++++++++\n\n', Countries.allCountries);
+function updateCountryDb() {
+
+  console.log('!!!!!!!!!!!!!!!!!!!!!!!!\n\nStarting SQL Update\n\n!!!!!!!!!!!!!!!!!!!!!!');
+
+  Countries.allCountries.forEach(country => {
+    let { id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date } = country;
+
+    const SQL = `UPDATE countries SET country_name=$2, capital=$3, country_code=$4, currency_code=$5, exchange_rate=$6, local_bmi=$7, usa_bmi=$8, flag_url=$9, created_date=$10 WHERE id=$1;`;
+
+    const values = [id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date];
+
+    return client.query(SQL, values);
+  })
+
+  console.log('!!!!!!!!!!!!!!!!!!!!!!!!\n\nYOU ARE A WINNER\n\n!!!!!!!!!!!!!!!!!!!!!!');
+
 }
 
 
