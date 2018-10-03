@@ -87,9 +87,16 @@ function renderHomePage(request, response) { response.render('index'); }
 // Get the API info for currency from fixer.io and returns an array of arrays with currency code and exchange rate in each array.
 function getCurrency() {
   const url = `http://data.fixer.io/api/latest?access_key=${process.env.FIXER_API_KEY}&base=USD`;
-  superagent(url)
+
+  console.log(`+++++++++++++++++++++++`);
+  console.log('fixer.io: ', url);
+  console.log(`+++++++++++++++++++++++`);
+
+  return superagent(url)
     .then(result => {
-      return Object.entries(result.body.rates);
+      let newArray = Object.entries(result.body.rates);
+      console.log(newArray);
+      return newArray;
     })
 }
 
@@ -97,6 +104,10 @@ function getCurrency() {
 
 function getCapitalsAndFlags(data) {
   // For each country code we will add the code to a variable that appends to the end of the Restcountries API.
+
+  // console.log(`%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%`);
+  // console.log('DATA from SQL', data);
+  // console.log(`%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%`);
 
   let countryCodes = '';
 
@@ -127,25 +138,34 @@ function getCapitalsAndFlags(data) {
 function getSQL(request, response) {
   const SQL = `SELECT * FROM countries;`;
 
-  console.log('inside the getSQL function');
-  client.query(SQL)
-    .then(result => {
-      console.log('FIRST SQL.then');
-      const ratesArray = getCurrency();
-      const capsAndFlags = getCapitalsAndFlags(result);
+  const ratesArray = getCurrency()
+    .then(client.query(SQL)
+      .then(result => {
+
+        console.log(`+++++++++++++++++++++++`);
+        console.log('ratesArray: ', ratesArray);
+        console.log(`+++++++++++++++++++++++`);
+
+        const capsAndFlags = getCapitalsAndFlags(result.rows);
+
+        console.log(`+++++++++++++++++++++++`);
+        console.log('capsAndFlags: ', capsAndFlags);
+        console.log(`+++++++++++++++++++++++`);
+
+        // let arrObj = result.rows;
+        // let arrArr = getCurrency();
+        // arrObj.forEach(country => {
+        //   let xx = arrArr.find(element => element[0] === country.currency_code)
+        //   country.exchange_rate = xx[1];
+        //   country.USA_bmi = country.local_bmi / country.exchange_rate;
 
 
-      // let arrObj = result.rows;
-      // let arrArr = getCurrency();
-      // arrObj.forEach(country => {
-      //   let xx = arrArr.find(element => element[0] === country.currency_code)
-      //   country.exchange_rate = xx[1];
-      //   country.USA_bmi = country.local_bmi / country.exchange_rate;
-
-
-      // })
-    })
+        // })
+      })
+      .catch(err => processErrors(err, response))
+    )
     .catch(err => processErrors(err, response));
+
 }
 
 

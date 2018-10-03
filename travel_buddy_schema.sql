@@ -45,7 +45,7 @@ VALUES
 ('Chile', 'CHL', 'CLP', 652.52, 2642.71, 4.05), 
 ('Costa Rica', 'CRI', 'CRC', 563.909, 2272.55, 4.03), 
 ('South Korea', 'KOR', 'KRW', 1134.217, 4570.89, 4.03), 
-('United Arab Emirates', 'ARE', 'AED', 3.672, 13.99, 3.81), 
+('United Arab Emirates', 'ARE', 'AED', 3.672, 13.99, 3.81),
 ('Sri Lanka', 'LKA', 'LKR', 159.8, 581.67, 3.64), 
 ('Thailand', 'THA', 'THB', 33.359, 119.76, 3.59), 
 ('Honduras', 'HND', 'HNL', 23.922, 84.68, 3.54), 
