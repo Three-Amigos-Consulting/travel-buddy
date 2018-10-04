@@ -51,6 +51,7 @@ app.set('view engine', 'ejs');
 // index.ejs
 app.get('/', renderHomePage);
 app.get('/explore', getSQL);
+app.get('/details/:id', getCountry);
 
 //Set the catch all route
 app.get('*', (request, response) => response.status(404).render('pages/404-error.ejs'));
@@ -86,6 +87,7 @@ function renderHomePage(request, response) { response.render('index'); }
 
 // Get the API info for currency from fixer.io and returns an array of arrays with currency code and exchange rate in each array.
 function getCurrency() {
+  console.log('** Retrieving Currency from API');
   const url = `http://data.fixer.io/api/latest?access_key=${process.env.FIXER_API_KEY}&base=USD`;
 
   return superagent(url)
@@ -99,6 +101,7 @@ function getCurrency() {
 
 function getCapitalsAndFlags(data) {
   // For each country code we will add the code to a variable that appends to the end of the Restcountries API.
+  console.log('*** Retrieving Capitals and Flags from API');
 
   let countryCodes = '';
 
@@ -119,8 +122,9 @@ function getCapitalsAndFlags(data) {
     .catch(err => processErrors(err));
 }
 
+// Retrieve the data from the SQL server and update it with the API info
 function getSQL(request, response) {
-  console.log('STARTING THE SQL PULL');
+  console.log('* Retrieving stored data from SQL Server');
 
   const SQL = `SELECT * FROM countries;`;
 
@@ -129,14 +133,21 @@ function getSQL(request, response) {
   let capitalsAndFlags = [];
   Countries.allCountries = [];
 
-
   client.query(SQL)
+    // First get the data from the SQL server
     .then(results => countriesDB = results.rows)
+    .catch(err => processErrors(err))
+    // Use the SQL data to help get capitals and flags
     .then(countries => getCapitalsAndFlags(countries)
+      .catch(err => processErrors(err))
       .then(capsAndFlags => capitalsAndFlags = capsAndFlags))
+    .catch(err => processErrors(err))
+    // Get the current currency rates
     .then(getCurrency()
+      .catch(err => processErrors(err))
       .then(rates => currency = rates))
     .catch(err => processErrors(err))
+    // Update data with the retrived information and calculate the current Big Mac Index for each country
     .then(() => {
       countriesDB.forEach(country => {
         // merge current rates into country data
@@ -155,25 +166,18 @@ function getSQL(request, response) {
         Countries.allCountries.push(new Countries(country));
       })
     })
+    .catch(err => processErrors(err))
+    // Save updated data back to database
     .then(() => updateCountryDb())
+    .catch(err => processErrors(err))
+    // Render the results of the updated information
     .then(() => showExplore(request, response))
     .catch(err => processErrors(err));
-
 }
 
-function showExplore(request, response) {
-  // sort the countries by Big Mac Index first
-  Countries.allCountries.sort((a, b) => a.usa_bmi - b.usa_bmi);
-
-  response.render('pages/explore', { countries: Countries.allCountries })
-}
-
-
-
-
+// Saves the updated data back to the SQL Server
 function updateCountryDb() {
-
-  console.log('!!!!!!!!!!!!!!!!!!!!!!!!\n\nStarting SQL Update\n\n!!!!!!!!!!!!!!!!!!!!!!');
+  console.log('**** UPDATING SQL Database');
 
   Countries.allCountries.forEach(country => {
     let { id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date } = country;
@@ -184,14 +188,33 @@ function updateCountryDb() {
 
     return client.query(SQL, values);
   })
+}
 
-  console.log('!!!!!!!!!!!!!!!!!!!!!!!!\n\nYOU ARE A WINNER\n\n!!!!!!!!!!!!!!!!!!!!!!');
+function showExplore(request, response) {
+  console.log('***** Preparing to render results');
+
+  // sort the countries by Big Mac Index first
+  Countries.allCountries.sort((a, b) => a.usa_bmi - b.usa_bmi);
+
+  response.render('pages/explore', { countries: Countries.allCountries })
+}
+
+function getCountry(request, response) {
+  console.log('\n\n# Retrieiving the requested country');
+
+  const requestedId = parseInt(request.params.id);
+  let countryDetail = Countries.allCountries.find(value => {
+    return value.id === requestedId;
+  })
+  console.log(countryDetail);
+
+
+  return response.render('pages/show', { country: countryDetail });
 
 }
 
 
-
-// // Error Handler
+// Error Handler
 function processErrors(error, response) {
   response.render('pages/404-error', { errorResult: error })
 }
