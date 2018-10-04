@@ -51,6 +51,7 @@ app.set('view engine', 'ejs');
 // index.ejs
 app.get('/', renderHomePage);
 app.get('/explore', getSQL);
+app.get('details/:id', getCountry);
 
 //Set the catch all route
 app.get('*', (request, response) => response.status(404).render('pages/404-error.ejs'));
@@ -86,6 +87,7 @@ function renderHomePage(request, response) { response.render('index'); }
 
 // Get the API info for currency from fixer.io and returns an array of arrays with currency code and exchange rate in each array.
 function getCurrency() {
+  console.log('** Retrieving Currency from API');
   const url = `http://data.fixer.io/api/latest?access_key=${process.env.FIXER_API_KEY}&base=USD`;
 
   return superagent(url)
@@ -99,6 +101,8 @@ function getCurrency() {
 
 function getCapitalsAndFlags(data) {
   // For each country code we will add the code to a variable that appends to the end of the Restcountries API.
+  console.log('*** Retrieving Capitals and Flags from API');
+
 
   let countryCodes = '';
 
@@ -120,7 +124,7 @@ function getCapitalsAndFlags(data) {
 }
 
 function getSQL(request, response) {
-  console.log('STARTING THE SQL PULL');
+  console.log('* Retrieving stored data from SQL Server');
 
   const SQL = `SELECT * FROM countries;`;
 
@@ -159,9 +163,24 @@ function getSQL(request, response) {
     .then(() => showExplore(request, response))
     .catch(err => processErrors(err));
 
+  function updateCountryDb() {
+    console.log('**** UPDATING SQL Database');
+
+    Countries.allCountries.forEach(country => {
+      let { id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date } = country;
+
+      const SQL = `UPDATE countries SET country_name=$2, capital=$3, country_code=$4, currency_code=$5, exchange_rate=$6, local_bmi=$7, usa_bmi=$8, flag_url=$9, created_date=$10 WHERE id=$1;`;
+
+      const values = [id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date];
+
+      return client.query(SQL, values);
+    })
+  }
 }
 
 function showExplore(request, response) {
+  console.log('***** Preparing to render results');
+
   // sort the countries by Big Mac Index first
   Countries.allCountries.sort((a, b) => a.usa_bmi - b.usa_bmi);
 
@@ -169,25 +188,16 @@ function showExplore(request, response) {
 }
 
 
+function getCountry(request, response) {
+  console.log('DETAIL SECTION STARTED!');
 
+  let country = Countries.allCountries.find(value => value[0] === request.params.id);
 
-function updateCountryDb() {
-
-  console.log('!!!!!!!!!!!!!!!!!!!!!!!!\n\nStarting SQL Update\n\n!!!!!!!!!!!!!!!!!!!!!!');
-
-  Countries.allCountries.forEach(country => {
-    let { id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date } = country;
-
-    const SQL = `UPDATE countries SET country_name=$2, capital=$3, country_code=$4, currency_code=$5, exchange_rate=$6, local_bmi=$7, usa_bmi=$8, flag_url=$9, created_date=$10 WHERE id=$1;`;
-
-    const values = [id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date];
-
-    return client.query(SQL, values);
-  })
-
-  console.log('!!!!!!!!!!!!!!!!!!!!!!!!\n\nYOU ARE A WINNER\n\n!!!!!!!!!!!!!!!!!!!!!!');
+  return response.render('pages/show', { country });
 
 }
+
+
 
 
 
