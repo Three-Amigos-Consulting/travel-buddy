@@ -51,7 +51,7 @@ app.set('view engine', 'ejs');
 // index.ejs
 app.get('/', renderHomePage);
 app.get('/explore', getSQL);
-app.get('details/:id', getCountry);
+app.get('/details/:id', getCountry);
 
 //Set the catch all route
 app.get('*', (request, response) => response.status(404).render('pages/404-error.ejs'));
@@ -103,7 +103,6 @@ function getCapitalsAndFlags(data) {
   // For each country code we will add the code to a variable that appends to the end of the Restcountries API.
   console.log('*** Retrieving Capitals and Flags from API');
 
-
   let countryCodes = '';
 
   data.forEach(country => {
@@ -123,6 +122,7 @@ function getCapitalsAndFlags(data) {
     .catch(err => processErrors(err));
 }
 
+// Retrieve the data from the SQL server and update it with the API info
 function getSQL(request, response) {
   console.log('* Retrieving stored data from SQL Server');
 
@@ -133,14 +133,21 @@ function getSQL(request, response) {
   let capitalsAndFlags = [];
   Countries.allCountries = [];
 
-
   client.query(SQL)
+    // First get the data from the SQL server
     .then(results => countriesDB = results.rows)
+    .catch(err => processErrors(err))
+    // Use the SQL data to help get capitals and flags
     .then(countries => getCapitalsAndFlags(countries)
+      .catch(err => processErrors(err))
       .then(capsAndFlags => capitalsAndFlags = capsAndFlags))
+    .catch(err => processErrors(err))
+    // Get the current currency rates
     .then(getCurrency()
+      .catch(err => processErrors(err))
       .then(rates => currency = rates))
     .catch(err => processErrors(err))
+    // Update data with the retrived information and calculate the current Big Mac Index for each country
     .then(() => {
       countriesDB.forEach(country => {
         // merge current rates into country data
@@ -159,23 +166,28 @@ function getSQL(request, response) {
         Countries.allCountries.push(new Countries(country));
       })
     })
+    .catch(err => processErrors(err))
+    // Save updated data back to database
     .then(() => updateCountryDb())
+    .catch(err => processErrors(err))
+    // Render the results of the updated information
     .then(() => showExplore(request, response))
     .catch(err => processErrors(err));
+}
 
-  function updateCountryDb() {
-    console.log('**** UPDATING SQL Database');
+// Saves the updated data back to the SQL Server
+function updateCountryDb() {
+  console.log('**** UPDATING SQL Database');
 
-    Countries.allCountries.forEach(country => {
-      let { id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date } = country;
+  Countries.allCountries.forEach(country => {
+    let { id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date } = country;
 
-      const SQL = `UPDATE countries SET country_name=$2, capital=$3, country_code=$4, currency_code=$5, exchange_rate=$6, local_bmi=$7, usa_bmi=$8, flag_url=$9, created_date=$10 WHERE id=$1;`;
+    const SQL = `UPDATE countries SET country_name=$2, capital=$3, country_code=$4, currency_code=$5, exchange_rate=$6, local_bmi=$7, usa_bmi=$8, flag_url=$9, created_date=$10 WHERE id=$1;`;
 
-      const values = [id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date];
+    const values = [id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date];
 
-      return client.query(SQL, values);
-    })
-  }
+    return client.query(SQL, values);
+  })
 }
 
 function showExplore(request, response) {
@@ -187,21 +199,22 @@ function showExplore(request, response) {
   response.render('pages/explore', { countries: Countries.allCountries })
 }
 
-
 function getCountry(request, response) {
-  console.log('DETAIL SECTION STARTED!');
+  console.log('\n\n# Retrieiving the requested country');
 
-  let country = Countries.allCountries.find(value => value[0] === request.params.id);
+  const requestedId = parseInt(request.params.id);
+  let countryDetail = Countries.allCountries.find(value => {
+    return value.id === requestedId;
+  })
+  console.log(countryDetail);
 
-  return response.render('pages/show', { country });
+
+  return response.render('pages/show', { country: countryDetail });
 
 }
 
 
-
-
-
-// // Error Handler
+// Error Handler
 function processErrors(error, response) {
   response.render('pages/404-error', { errorResult: error })
 }
