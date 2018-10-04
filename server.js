@@ -144,9 +144,11 @@ function getSQL(request, response) {
       .then(rates => currency = rates))
     // Update data with the retrived information and calculate the current Big Mac Index for each country
     .then(() => {
+      console.log('currency:', currency);
       countriesDB.forEach(country => {
         // merge current rates into country data
         let rate = currency.find(value => value[0] === country.currency_code);
+        console.log('rate:', rate);
         country.exchange_rate = rate[1];
 
         // merge capitals and flags into data
