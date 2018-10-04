@@ -49,8 +49,8 @@ app.set('view engine', 'ejs');
 // ++++++++++++++++
 
 // index.ejs
-app.get('/', getSQL);
-// app.get('/', renderHomePage);
+app.get('/', renderHomePage);
+app.get('/explore', getSQL);
 
 //Set the catch all route
 app.get('*', (request, response) => response.status(404).render('pages/404-error.ejs'));
@@ -82,7 +82,7 @@ Countries.allCountries = [];
 // Helper functions
 // +++++++++++++++++++++++++++++++++
 
-// function renderHomePage(request, response) { response.render('index'); }
+function renderHomePage(request, response) { response.render('index'); }
 
 // Get the API info for currency from fixer.io and returns an array of arrays with currency code and exchange rate in each array.
 function getCurrency() {
@@ -119,7 +119,7 @@ function getCapitalsAndFlags(data) {
     .catch(err => processErrors(err));
 }
 
-function getSQL() {
+function getSQL(request, response) {
   console.log('STARTING THE SQL PULL');
 
   const SQL = `SELECT * FROM countries;`;
@@ -155,9 +155,17 @@ function getSQL() {
       })
     })
     .then(() => updateCountryDb())
+    .then(() => showExplore(request, response))
     .catch(err => processErrors(err));
 
 }
+
+function showExplore(request, response) {
+  response.render('pages/explore', {countries: Countries.allCountries})
+}
+
+
+
 
 function updateCountryDb() {
 

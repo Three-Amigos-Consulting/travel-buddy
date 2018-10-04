@@ -1,0 +1,34 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+
+<%- include('layout/head')%>
+
+<%- include('layout/header')%>
+
+<body>
+<% countries.forEach(country => { %>
+  <div class="deck">
+
+    <h1>Card Deck</h1>
+
+    <div class="flag">
+      <img src="<%- country.flag_url %>">
+    </div>
+
+    <div class="deck-text">
+      <h2><%- country.country_name %></h2>
+    </div>
+
+    <div class="deck-button">
+
+      <button type="button" class="select">Select this country</button>
+
+    </div>
+
+  </div>
+<% }) %>
+  <%- include('layout/footer')%>
+
+</body>
+
+</html>
