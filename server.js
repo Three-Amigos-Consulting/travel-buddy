@@ -206,6 +206,7 @@ function getCountry(request, response) {
 }
 
 // Error Handler
-function processErrors(error, response) {
-  response.render('pages/404-error', { errorResult: error })
+function processErrors(err) {
+  console.error(err);
+  // response.render('pages/404-error', { errorResult: error })
 }
