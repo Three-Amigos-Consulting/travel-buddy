@@ -136,17 +136,17 @@ function getSQL(request, response) {
   client.query(SQL)
     // First get the data from the SQL server
     .then(results => countriesDB = results.rows)
-    .catch(err => processErrors(err))
+    .catch(err => processErrors(err, response))
     // Use the SQL data to help get capitals and flags
     .then(countries => getCapitalsAndFlags(countries)
-      .catch(err => processErrors(err))
+      .catch(err => processErrors(err, response))
       .then(capsAndFlags => capitalsAndFlags = capsAndFlags))
-    .catch(err => processErrors(err))
+    .catch(err => processErrors(err, response))
     // Get the current currency rates
     .then(getCurrency()
-      .catch(err => processErrors(err))
+      .catch(err => processErrors(err, response))
       .then(rates => currency = rates))
-    .catch(err => processErrors(err))
+    .catch(err => processErrors(err, response))
     // Update data with the retrived information and calculate the current Big Mac Index for each country
     .then(() => {
       countriesDB.forEach(country => {
@@ -166,13 +166,13 @@ function getSQL(request, response) {
         Countries.allCountries.push(new Countries(country));
       })
     })
-    .catch(err => processErrors(err))
+    .catch(err => processErrors(err, response))
     // Save updated data back to database
     .then(() => updateCountryDb())
-    .catch(err => processErrors(err))
+    .catch(err => processErrors(err, response))
     // Render the results of the updated information
     .then(() => showExplore(request, response))
-    .catch(err => processErrors(err));
+    .catch(err => processErrors(err, response));
 }
 
 // Saves the updated data back to the SQL Server
