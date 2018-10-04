@@ -90,11 +90,14 @@ function getCurrency() {
   console.log('** Retrieving Currency from API');
   const url = `https://data.fixer.io/api/latest?access_key=${process.env.FIXER_API_KEY}&base=USD`;
 
+  let ratesArray = [];
   return superagent(url)
     .then(result => {
-      let ratesArray = Object.entries(result.body.rates);
+      ratesArray = Object.entries(result.body.rates);
+      console.log('GET CURRENCY VALUE: ', ratesArray);
       return ratesArray;
     })
+    .catch(err => processErrors(err))
 }
 
 // Get API info from RESTcountries to populate capital and flag_url info.  The function will receive information from our SQL database to limit the countries being requested.
@@ -137,14 +140,21 @@ function getSQL(request, response) {
     // First get the data from the SQL server
     .then(results => countriesDB = results.rows)
     // Use the SQL data to help get capitals and flags
-    .then(countries => getCapitalsAndFlags(countries)
-      .then(capsAndFlags => capitalsAndFlags = capsAndFlags))
+    .then(countries => getCapitalsAndFlags(countries))
+    .then(capsAndFlags => {
+      capitalsAndFlags = capsAndFlags;
+    })
     // Get the current currency rates
-    .then(getCurrency()
-      .then(rates => currency = rates))
+    .then(getCurrency)
+    .catch(err => processErrors(err))
+    .then(rates => {
+      console.log('RETURN VALUE FROM RATES:', rates);
+      currency = rates;
+    })
+    .catch(err => processErrors(err))
     // Update data with the retrived information and calculate the current Big Mac Index for each country
     .then(() => {
-      console.log('currency:', currency);
+      console.log('AFTER CHANGE TO .THEN - currency:', currency);
       countriesDB.forEach(country => {
         // merge current rates into country data
         let rate = currency.find(value => value[0] === country.currency_code);
