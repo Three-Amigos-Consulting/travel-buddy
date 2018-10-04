@@ -88,7 +88,7 @@ function renderHomePage(request, response) { response.render('index'); }
 // Get the API info for currency from fixer.io and returns an array of arrays with currency code and exchange rate in each array.
 function getCurrency() {
   console.log('** Retrieving Currency from API');
-  const url = `http://data.fixer.io/api/latest?access_key=${process.env.FIXER_API_KEY}&base=USD`;
+  const url = `https://data.fixer.io/api/latest?access_key=${process.env.FIXER_API_KEY}&base=USD`;
 
   return superagent(url)
     .then(result => {
