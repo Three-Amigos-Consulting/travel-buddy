@@ -27,6 +27,13 @@ nav {
   border: 2px solid black;
   background-color: rgba(0, 0, 0, 0.5);
   box-shadow: 3px 3px 3px grey;
+  
+  }
+
+  .deck h1 {
+    margin: 5px 0px 0px 5px;
+    color:white;
+    font-weight:bold;
   }
 
 .flag {
