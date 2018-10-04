@@ -127,6 +127,7 @@ function getSQL(request, response) {
   let countriesDB = [];
   let currency = [];
   let capitalsAndFlags = [];
+  Countries.allCountries = [];
 
 
   client.query(SQL)
@@ -161,7 +162,10 @@ function getSQL(request, response) {
 }
 
 function showExplore(request, response) {
-  response.render('pages/explore', {countries: Countries.allCountries})
+  // sort the countries by Big Mac Index first
+  Countries.allCountries.sort((a, b) => a.usa_bmi - b.usa_bmi);
+
+  response.render('pages/explore', { countries: Countries.allCountries })
 }
 
 
