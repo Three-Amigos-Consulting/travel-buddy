@@ -54,7 +54,7 @@ app.get('/explore', getSQL);
 app.get('/details/:id', getCountry);
 
 //Set the catch all route
-app.get('*', (request, response) => response.status(404).render('pages/404-error.ejs'));
+app.get('*', (request, response) => response.status(404).render('pages/404-error.ejs', { errorResult: '' }));
 
 // Activate the server
 app.listen(PORT, () => console.log(`(TRAVEL BUDDY) listening on: ${PORT}`));
@@ -73,7 +73,7 @@ function Countries(data) {
   this.exchange_rate = data.exchange_rate;
   this.local_bmi = data.local_bmi;
   this.usa_bmi = data.usa_bmi;
-  this.flag_url = data.flag_url
+  this.flag_url = data.flag_url;
   this.created_date = Date.now();
 }
 
@@ -136,17 +136,12 @@ function getSQL(request, response) {
   client.query(SQL)
     // First get the data from the SQL server
     .then(results => countriesDB = results.rows)
-    .catch(err => processErrors(err, response))
     // Use the SQL data to help get capitals and flags
     .then(countries => getCapitalsAndFlags(countries)
-      .catch(err => processErrors(err, response))
       .then(capsAndFlags => capitalsAndFlags = capsAndFlags))
-    .catch(err => processErrors(err, response))
     // Get the current currency rates
     .then(getCurrency()
-      .catch(err => processErrors(err, response))
       .then(rates => currency = rates))
-    .catch(err => processErrors(err, response))
     // Update data with the retrived information and calculate the current Big Mac Index for each country
     .then(() => {
       countriesDB.forEach(country => {
@@ -166,10 +161,8 @@ function getSQL(request, response) {
         Countries.allCountries.push(new Countries(country));
       })
     })
-    .catch(err => processErrors(err, response))
     // Save updated data back to database
     .then(() => updateCountryDb())
-    .catch(err => processErrors(err, response))
     // Render the results of the updated information
     .then(() => showExplore(request, response))
     .catch(err => processErrors(err, response));
@@ -196,7 +189,7 @@ function showExplore(request, response) {
   // sort the countries by Big Mac Index first
   Countries.allCountries.sort((a, b) => a.usa_bmi - b.usa_bmi);
 
-  response.render('pages/explore', { countries: Countries.allCountries })
+  response.render('pages/explore/show', { countries: Countries.allCountries })
 }
 
 function getCountry(request, response) {
@@ -208,13 +201,12 @@ function getCountry(request, response) {
   })
   console.log(countryDetail);
 
-
-  return response.render('pages/show', { country: countryDetail });
+  return response.render('pages/detail/show', { country: countryDetail });
 
 }
 
-
 // Error Handler
-function processErrors(error, response) {
-  response.render('pages/404-error', { errorResult: error })
+function processErrors(err) {
+  console.error(err);
+  // response.render('pages/404-error', { errorResult: error })
 }
