@@ -94,7 +94,6 @@ function getCurrency() {
   return superagent(url)
     .then(result => {
       ratesArray = Object.entries(result.body.rates);
-      console.log('GET CURRENCY VALUE: ', ratesArray);
       return ratesArray;
     })
     .catch(err => processErrors(err))
@@ -148,17 +147,14 @@ function getSQL(request, response) {
     .then(getCurrency)
     .catch(err => processErrors(err))
     .then(rates => {
-      console.log('RETURN VALUE FROM RATES:', rates);
       currency = rates;
     })
     .catch(err => processErrors(err))
     // Update data with the retrived information and calculate the current Big Mac Index for each country
     .then(() => {
-      console.log('AFTER CHANGE TO .THEN - currency:', currency);
       countriesDB.forEach(country => {
         // merge current rates into country data
         let rate = currency.find(value => value[0] === country.currency_code);
-        console.log('rate:', rate);
         country.exchange_rate = rate[1];
 
         // merge capitals and flags into data
