@@ -210,8 +210,8 @@ function getCountry(request, response) {
   })
   console.log(countryDetail);
   getHotels(countryDetail);
-  getRestaurants(countryDetail);
-  console.log(Restaurants.allRestaurants);
+  getRestaurants(countryDetail)
+    .then(() => console.log(Restaurants.allRestaurants));
 
   return response.render('pages/show', { country: countryDetail });
 
@@ -244,7 +244,7 @@ function getHotels(obj) {
       })
       // console.log(Hotels.allHotels.length)
       Hotels.allHotels.sort((a,b) => b.rating - a.rating);
-      // console.log(Hotels.allHotels);
+      console.log(Hotels.allHotels);
       return hotelData;
     })
     .catch(err => processErrors(err));
@@ -266,18 +266,29 @@ function getRestaurants(obj) {
           address:data.formatted_address,
           photos:data.photos[0].photo_reference,
           latitude:data.geometry.location.lat,
-          longitude:data.geometry.location.lng});
+          longitude:data.geometry.location.lng,
+        });
       })
+      // console.log(foodData);
       foodData.forEach(food => {
         Restaurants.allRestaurants.push(new Restaurants(food));
       })
-      console.log(Restaurants.allRestaurants.length)
+      // console.log(Restaurants.allRestaurants.length)
       Restaurants.allRestaurants.sort((a,b) => b.rating - a.rating);
       console.log(Restaurants.allRestaurants);
 
       return foodData;
     })
     // .catch(err => processErrors(err));
+}
+
+function getImageURL(data) {
+  const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${data.photos}&key=${process.env.GOOGLE_API_KEY}`
+
+  return superagent(url)
+    .then(result => {
+      return result.request.url
+    })
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -292,7 +303,7 @@ function Restaurants(data) {
   this.address = data.address;
   this.latitude = data.latitude;
   this.longitude = data.longitude;
-  this.photos = data.photos
+  this.photos = data.photos;
 }
 
 Restaurants.allRestaurants = [];
