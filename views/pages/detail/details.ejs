@@ -37,8 +37,13 @@
   </div>
 </div>
 
-<div class="deck">
-  <div class="detail-data">
+
+
+<div class="deck-button">
+  <button class="select-hotel" type="button">Hotel Options</button>
+</div>
+<div class="detail-data hide-me">
+  <div class="deck">
     <% hotels.forEach(hotel => {%>
     <div class="detail-name">
       <h2>
@@ -55,13 +60,13 @@
     </div>
     <% }) %>
   </div>
-  <div class="deck-button">
-    <button type="button" class="select">Hotel Options</button>
-  </div>
-
 </div>
-<div class="deck">
-  <div class="detail-data">
+
+<div class="deck-button-too">
+  <button class="select-restaurant" type="button">Restaurants</button>
+</div>
+<div class="detail-data-too hide-me-too">
+  <div class="deck">
     <% restaurants.forEach(restaurant => {%>
     <div class="detail-name">
       <h2>
@@ -82,14 +87,7 @@
     </div>
     <% }) %>
   </div>
-  <div class="deck-button">
-    <button type="button" class="select">Restaurants</button>
-  </div>
 </div>
-<button type="button" class="select">Add to My Trips</button>
-
-
-
-</body>
-
-</html>
+<div class="parent">
+  <button class="select-trips" type="button">Add to My Trips</button>
+</div>
