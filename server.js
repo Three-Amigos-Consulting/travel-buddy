@@ -211,11 +211,20 @@ function getCountry(request, response) {
   })
   console.log(countryDetail);
 
-  getHotels(countryDetail);
-  getRestaurants(countryDetail)
-    .then(() => console.log(Restaurants.allRestaurants));
+  getHotels(countryDetail)
+    .then(() => getRestaurants(countryDetail)
+      .then(results => {
+        console.log(Hotels.allHotels)
+        response.render('pages/detail/show', {
+          country: countryDetail,
+          restaurants: results,
+          hotels: Hotels.allHotels
+        })
+      }
+      ))
+    .catch(err => processErrors(err, response))
 
-  return response.render('pages/show', { country: countryDetail });
+  // return response.render('pages/detail/show', { country: countryDetail, restuarants: Restaurants.allRestaurants, hotels: Hotels.allHotels });
 
 }
 
@@ -225,7 +234,7 @@ function getCountry(request, response) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 function getHotels(obj) {
-  console.log('Getting Hotel Function')
+  console.log('Getting Hotel Function');
   const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=hotels+in+${obj.capital},${obj.country_name}&key=${process.env.GOOGLE_API_KEY}`
 
   return superagent(url)
@@ -234,24 +243,25 @@ function getHotels(obj) {
       result.body.results.forEach(data => {
         // console.log(data);
         hotelData.push({
-          name:data.name,
-          rating:data.rating,
-          address:data.formatted_address,
-          photos:data.photos[0].photo_reference,
-          latitude:data.geometry.location.lat,
-          longitude:data.geometry.location.lng});
+          name: data.name,
+          rating: data.rating,
+          address: data.formatted_address,
+          photos: data.photos[0].photo_reference,
+          latitude: data.geometry.location.lat,
+          longitude: data.geometry.location.lng
+        });
       })
       hotelData.forEach(hotel => {
         Hotels.allHotels.push(new Hotels(hotel));
       })
       // console.log(Hotels.allHotels.length)
-      Hotels.allHotels.sort((a,b) => b.rating - a.rating);
-      console.log(Hotels.allHotels);
-      return hotelData;
+      Hotels.allHotels.sort((a, b) => b.rating - a.rating);
+      Hotels.allHotels.length = 5;
+      // console.log(Hotels.allHotels);
+      // return hotelData;
     })
     .catch(err => processErrors(err));
 }
-
 
 function getRestaurants(obj) {
   console.log('Getting Restaurant Function')
@@ -262,13 +272,13 @@ function getRestaurants(obj) {
       let foodData = [];
       result.body.results.forEach(data => {
         foodData.push({
-          name:data.name,
-          rating:data.rating,
-          price:data.price_level,
-          address:data.formatted_address,
-          photos:data.photos[0].photo_reference,
-          latitude:data.geometry.location.lat,
-          longitude:data.geometry.location.lng,
+          name: data.name,
+          rating: data.rating,
+          price: data.price_level,
+          address: data.formatted_address,
+          photos: data.photos[0].photo_reference,
+          latitude: data.geometry.location.lat,
+          longitude: data.geometry.location.lng,
         });
       })
       // console.log(foodData);
@@ -276,22 +286,22 @@ function getRestaurants(obj) {
         Restaurants.allRestaurants.push(new Restaurants(food));
       })
       // console.log(Restaurants.allRestaurants.length)
-      Restaurants.allRestaurants.sort((a,b) => b.rating - a.rating);
-      console.log(Restaurants.allRestaurants);
+      Restaurants.allRestaurants.sort((a, b) => b.rating - a.rating);
+      // console.log(Restaurants.allRestaurants);
 
       return foodData;
     })
-    // .catch(err => processErrors(err));
+  // .catch(err => processErrors(err));
 }
 
-function getImageURL(data) {
-  const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${data.photos}&key=${process.env.GOOGLE_API_KEY}`
+// function getImageURL(data) {
+//   const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${data.photos}&key=${process.env.GOOGLE_API_KEY}`
 
-  return superagent(url)
-    .then(result => {
-      return result.request.url
-    })
-}
+//   return superagent(url)
+//     .then(result => {
+//       return result.request.url
+//     })
+// }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //                                     GOOGLE CONSTRUCTORS                                       //
@@ -300,7 +310,7 @@ function getImageURL(data) {
 
 function Restaurants(data) {
   this.name = data.name;
-  this.price = data.price;
+  this.price = data.price || 'Not Available';
   this.rating = data.rating;
   this.address = data.address;
   this.latitude = data.latitude;
@@ -326,5 +336,4 @@ Hotels.allHotels = [];
 // Error Handler
 function processErrors(err) {
   console.error(err);
-  // response.render('pages/404-error', { errorResult: error })
 }

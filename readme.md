@@ -51,6 +51,8 @@ Database Schema can be found in [travel_budy_schema.sql](travel_budy_schema.sql)
 10-03-2018 - 9:30pm (DC) - Fixed refresh bug in explore, sorted array
 10-03-2018
 
+10-04-2018 - (DC) - worked on debugging Heroku deployment after successful creation of detail render.
+
 
 ## The Big Mac Index
 (https://www.statista.com/statistics/274326/big-mac-index-global-prices-for-a-big-mac/)
