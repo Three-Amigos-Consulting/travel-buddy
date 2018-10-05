@@ -85,7 +85,7 @@ Countries.allCountries = [];
 // Helper functions
 // +++++++++++++++++++++++++++++++++
 
-function renderHomePage(request, response) { response.render('index'); }
+function renderHomePage(request, response) { response.render('pages/index'); }
 function renderBigMac(request, response) { response.render('pages/big-mac-index'); }
 function renderAboutUs(request, response) { response.render('pages/aboutus'); }
 
