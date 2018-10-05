@@ -52,6 +52,7 @@ app.set('view engine', 'ejs');
 app.get('/', renderHomePage);
 app.get('/explore', getSQL);
 app.get('/details/:id', getCountry);
+app.get('/aboutus', renderAboutUs);
 
 //Set the catch all route
 app.get('*', (request, response) => response.status(404).render('pages/404-error.ejs', { errorResult: '' }));
@@ -84,7 +85,7 @@ Countries.allCountries = [];
 // +++++++++++++++++++++++++++++++++
 
 function renderHomePage(request, response) { response.render('index'); }
-
+function renderAboutUs(request, response) { response.render('pages/aboutus'); }
 // Get the API info for currency from fixer.io and returns an array of arrays with currency code and exchange rate in each array.
 function getCurrency() {
   console.log('** Retrieving Currency from API');
