@@ -3,7 +3,8 @@
 .title {
   width: 75%;
   margin-left:10px;
-  border:1px solid black;
+  /* border:1px solid black; */
+  text-align: center;
 }
 
 nav {
@@ -14,9 +15,9 @@ nav {
 }
 
 .hamburger-menu {
-  width: 100%;
+  width: 75%;
   height:50%;
-  border:1px solid black;
+  /* border:1px solid black; */
 }
 
 /* COUNTRY DECK */
@@ -25,23 +26,20 @@ nav {
   width:75%;
   margin: 60px auto 0px auto;
   border: 2px solid black;
-  background-color: rgba(0, 0, 0, 0.5);
-  box-shadow: 3px 3px 3px grey;
+  background-color: rgba(0, 0, 0, 0.60);
+  box-shadow: 10px 10px 15px  rgba(0, 0, 0, 0.75);
   
   }
 
   .deck h1 {
-    margin: 5px 0px 0px 5px;
+    margin: 10px 0px 10px 10px;
     color:white;
     font-weight:bold;
   }
 
 .flag {
   width: 75%;
-  height:150px;
   margin: 25px auto 25px auto;
-  /* border :2px solid black; */
-  /* box-shadow: 3px 3px 3px lightgray; */
 }
 
 .flag img {
@@ -57,19 +55,56 @@ nav {
 .deck-button {
   width: 75%;
   height: 50px;
-  margin: 0px auto 50px auto;
+  margin: 0px auto 25px auto;
   text-align: center;
 }
 
+
+
 .select {
   margin:5px auto;
+  padding: 0 20px;
   border: none;
   box-shadow: 2px 2px 1px grey;
   background-color: rgb(22, 96, 192);
-  font-family: 'Baloo Tamma', cursive;
+  font-family: 'Roboto', sans-serif;
   font-size: 125%;
   color: white;
 }
+
+.detail-data {
+  width:75%;
+  margin: 0px auto 20px auto;
+  /* border: 1px solid lightskyblue; */
+}
+
+.detail-name {
+  margin: 20px auto 20px auto;
+  padding: 5px;
+  border: 1px solid lightskyblue;
+  text-align: center;
+}
+
+.detail-name {
+  margin-bottom: 10px;
+  color: white;
+}
+
+.rating-price {
+  margin-bottom: 10px;
+  color: lightgoldenrodyellow;
+
+}
+
+
+.hide {
+display:none;
+}
+
+/* .show {
+   
+
+} */
 
 
 /* ============================
