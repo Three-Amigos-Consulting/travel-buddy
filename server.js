@@ -172,6 +172,8 @@ function getSQL(request, response) {
 function updateCountryDb() {
   console.log('**** UPDATING SQL Database');
 
+  // console.log(Countries.allCountries);
+
   Countries.allCountries.forEach(country => {
     let { id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date } = country;
 
@@ -201,9 +203,117 @@ function getCountry(request, response) {
   })
   console.log(countryDetail);
 
-  return response.render('pages/detail/show', { country: countryDetail });
+  getHotels(countryDetail);
+  getRestaurants(countryDetail)
+    .then(() => console.log(Restaurants.allRestaurants));
+
+  return response.render('pages/show', { country: countryDetail });
 
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                 TESTING GOOGLE MAPS/PLACES                                    //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+function getHotels(obj) {
+  console.log('Getting Hotel Function')
+  const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=hotels+in+${obj.capital},${obj.country_name}&key=${process.env.GOOGLE_API_KEY}`
+
+  return superagent(url)
+    .then(result => {
+      let hotelData = [];
+      result.body.results.forEach(data => {
+        // console.log(data);
+        hotelData.push({
+          name:data.name,
+          rating:data.rating,
+          address:data.formatted_address,
+          photos:data.photos[0].photo_reference,
+          latitude:data.geometry.location.lat,
+          longitude:data.geometry.location.lng});
+      })
+      hotelData.forEach(hotel => {
+        Hotels.allHotels.push(new Hotels(hotel));
+      })
+      // console.log(Hotels.allHotels.length)
+      Hotels.allHotels.sort((a,b) => b.rating - a.rating);
+      console.log(Hotels.allHotels);
+      return hotelData;
+    })
+    .catch(err => processErrors(err));
+}
+
+
+function getRestaurants(obj) {
+  console.log('Getting Restaurant Function')
+  const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+${obj.capital},${obj.country_name}&key=${process.env.GOOGLE_API_KEY}`
+
+  return superagent(url)
+    .then(result => {
+      let foodData = [];
+      result.body.results.forEach(data => {
+        foodData.push({
+          name:data.name,
+          rating:data.rating,
+          price:data.price_level,
+          address:data.formatted_address,
+          photos:data.photos[0].photo_reference,
+          latitude:data.geometry.location.lat,
+          longitude:data.geometry.location.lng,
+        });
+      })
+      // console.log(foodData);
+      foodData.forEach(food => {
+        Restaurants.allRestaurants.push(new Restaurants(food));
+      })
+      // console.log(Restaurants.allRestaurants.length)
+      Restaurants.allRestaurants.sort((a,b) => b.rating - a.rating);
+      console.log(Restaurants.allRestaurants);
+
+      return foodData;
+    })
+    // .catch(err => processErrors(err));
+}
+
+function getImageURL(data) {
+  const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${data.photos}&key=${process.env.GOOGLE_API_KEY}`
+
+  return superagent(url)
+    .then(result => {
+      return result.request.url
+    })
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                     GOOGLE CONSTRUCTORS                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+function Restaurants(data) {
+  this.name = data.name;
+  this.price = data.price;
+  this.rating = data.rating;
+  this.address = data.address;
+  this.latitude = data.latitude;
+  this.longitude = data.longitude;
+  this.photos = data.photos;
+}
+
+Restaurants.allRestaurants = [];
+
+function Hotels(data) {
+  this.name = data.name;
+  this.rating = data.rating;
+  this.address = data.address;
+  this.latitude = data.latitude;
+  this.longitude = data.longitude;
+  this.photos = data.photos
+}
+
+Hotels.allHotels = [];
+
+
 
 // Error Handler
 function processErrors(err) {
