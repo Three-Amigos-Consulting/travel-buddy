@@ -1,8 +1,13 @@
 <div class="deck">
 
-  <h1>
-    <%- country.created_date %>
-  </h1>
+  <h2>
+    Last Updated:
+  </h2>
+
+  <h2>
+    <% let d = new Date(country.created_date).toString().slice(0, 15); %>
+    <%- d %>
+  </h2>
 
   <div class="flag">
     <img src="<%- country.flag_url %>">
@@ -12,32 +17,72 @@
     <h2>
       <%- country.country_name %>
     </h2>
-  </div>
 
-  <div class="deck-button">
-    <div class="hotel">
-      <% hotels.forEach(hotel => {%>
-      <div id="<%- hotel.name%>">
-        <p>
-          <%- hotel.name%>
-        </p>
-        <p>
-          <%- hotel.ratings%>
-        </p>
-        <p>
-          <%- hotel.address%>
-        </p>
-        </br>
-      </div>
-      <% }) %>
+    <h2>
+      Capital City:
+      <%- country.capital %>
+    </h2>
+
+    <h3>
+      Exchange Rate:
+    </h3>
+
+    <h3>
+      <%- country.exchange_rate %>
+      <%- country.currency_code %>
+    </h3>
+
+  </div>
+</div>
+
+<div class="deck-button">
+  <div class="hotel">
+    <% hotels.forEach(hotel => {%>
+    <div id="<%- hotel.name%>">
+      <p>
+        <%- hotel.name%>
+      </p>
+      <p>
+        Rating:
+        <%- hotel.rating%>
+      </p>
+      <p>
+        <%- hotel.address%>
+      </p>
+      </br>
     </div>
-    <button type="button" class="select">Hotel Options</button>
-    <button type="button" class="select">Restaurants</button>
-    <button type="button" class="select">Add to My Trips</button>
-
+    <% }) %>
   </div>
+
+  <button type="button" class="select">Hotel Options</button>
+
+  <div class="restaurants">
+    <% restaurants.forEach(restaurant => {%>
+    <div id="<%- restaurant.name%>">
+      <p>
+        <%- restaurant.name%>
+      </p>
+      <p>
+        Rating:
+        <%- restaurant.rating%> stars
+      </p>
+      <p>
+        Price:
+        <%- restaurant.price%>
+      </p>
+      <p>
+        <%- restaurant.address%>
+      </p>
+      </br>
+    </div>
+    <% }) %>
+  </div>
+  <button type="button" class="select">Restaurants</button>
+
+  <button type="button" class="select">Add to My Trips</button>
 
 </div>
+
 
 </body>
 

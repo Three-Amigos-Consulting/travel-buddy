@@ -213,25 +213,18 @@ function getCountry(request, response) {
 
   getHotels(countryDetail)
     .then(() => getRestaurants(countryDetail)
-      .then(results => {
-        console.log(Hotels.allHotels)
+      .then(() => {
+        // console.log(Hotels.allHotels)
         response.render('pages/detail/show', {
           country: countryDetail,
-          restaurants: results,
+          restaurants: Restaurants.allRestaurants,
           hotels: Hotels.allHotels
         })
       }
       ))
     .catch(err => processErrors(err, response))
 
-  // return response.render('pages/detail/show', { country: countryDetail, restuarants: Restaurants.allRestaurants, hotels: Hotels.allHotels });
-
 }
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//                                 TESTING GOOGLE MAPS/PLACES                                    //
-///////////////////////////////////////////////////////////////////////////////////////////////////
 
 function getHotels(obj) {
   console.log('Getting Hotel Function');
@@ -288,8 +281,8 @@ function getRestaurants(obj) {
       // console.log(Restaurants.allRestaurants.length)
       Restaurants.allRestaurants.sort((a, b) => b.rating - a.rating);
       // console.log(Restaurants.allRestaurants);
-
-      return foodData;
+      Restaurants.allRestaurants.length = 5;
+      // return foodData;
     })
   // .catch(err => processErrors(err));
 }
