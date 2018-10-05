@@ -3,7 +3,7 @@
 .title {
   width: 75%;
   margin-left:10px;
-  border:1px solid black;
+  /* border:1px solid black; */
   text-align: center;
 }
 
@@ -17,7 +17,7 @@ nav {
 .hamburger-menu {
   width: 75%;
   height:50%;
-  border:1px solid black;
+  /* border:1px solid black; */
 }
 
 /* COUNTRY DECK */
@@ -39,10 +39,7 @@ nav {
 
 .flag {
   width: 75%;
-  height:150px;
   margin: 25px auto 25px auto;
-  /* border :2px solid black; */
-  /* box-shadow: 3px 3px 3px lightgray; */
 }
 
 .flag img {
@@ -58,7 +55,7 @@ nav {
 .deck-button {
   width: 75%;
   height: 50px;
-  margin: 0px auto 50px auto;
+  margin: 0px auto 25px auto;
   text-align: center;
 }
 
@@ -74,6 +71,40 @@ nav {
   font-size: 125%;
   color: white;
 }
+
+.detail-data {
+  width:75%;
+  margin: 0px auto 20px auto;
+  /* border: 1px solid lightskyblue; */
+}
+
+.detail-name {
+  margin: 20px auto 20px auto;
+  padding: 5px;
+  border: 1px solid lightskyblue;
+  text-align: center;
+}
+
+.detail-name {
+  margin-bottom: 10px;
+  color: white;
+}
+
+.rating-price {
+  margin-bottom: 10px;
+  color: lightgoldenrodyellow;
+
+}
+
+
+.hide {
+display:none;
+}
+
+/* .show {
+   
+
+} */
 
 
 /* ============================

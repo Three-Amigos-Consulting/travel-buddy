@@ -20,16 +20,16 @@
   }
 
   h2 {
+    margin: 5px auto;
     font-size: 150%;
-    /* font-weight: bold; */
+    font-weight: bold;
     text-align: center;
-    font-family: 'Roboto', sans-serif;
-    line-height: 110%; 
-    
+    /* font-family: 'Roboto', sans-serif; */
+    line-height: 110%;
+    letter-spacing: 2px;
+    color: white;
   }
 
-  
-  
   .profilepic {
     width:100%;
     border-radius: 10px;
@@ -41,13 +41,7 @@ BEGIN TABLET/DESKTOP SCREENS
 
 @media screen and (min-width: 481px) {
   
-  body {
-    background-image: none;
-    background-color: purple;
-    color: red;
-    font-family: 'Roboto', sans-serif; 
-  }
-  
+   
   header {
     font-family: 'Baloo Tamma', cursive;
     
