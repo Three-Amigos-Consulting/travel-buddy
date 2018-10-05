@@ -28,8 +28,8 @@ nav {
   border: 2px solid black;
   background-color: rgba(0, 0, 0, 0.60);
   box-shadow: 10px 10px 15px  rgba(0, 0, 0, 0.75);
-  
-  }
+  text-align:center;
+    }
 
   .deck h1 {
     margin: 10px 0px 10px 10px;
@@ -50,6 +50,7 @@ nav {
   width: 75%;
   margin: 0px auto 25px auto;
   color:white;
+  text-align: center;
 }
 
 .deck-button {
@@ -58,8 +59,6 @@ nav {
   margin: 0px auto 25px auto;
   text-align: center;
 }
-
-
 
 .select {
   margin:5px auto;
@@ -70,6 +69,11 @@ nav {
   font-family: 'Roboto', sans-serif;
   font-size: 125%;
   color: white;
+}
+
+.color {
+  margin: 5px auto;
+  color: rgb(72, 255, 0);
 }
 
 .detail-data {
@@ -97,14 +101,7 @@ nav {
 }
 
 
-.hide {
-display:none;
-}
 
-/* .show {
-   
-
-} */
 
 
 /* ============================
