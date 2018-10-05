@@ -1,6 +1,6 @@
 console.log('app.js');
 $('.parent').on('click', '.select-trips', function () {
-  alert('Please become a Premium User \n to \'Save\' your results. Thank you.');
+  alert('myTrips is a preimum feature!\n\nPlease contact Three Amigos Consulting\n\nfor pricing and additional informaiton.');
 });
 $('.deck-button').on('click', '.select-hotel', function () {
   $('.detail-data').toggle('hide-me');
@@ -13,3 +13,6 @@ $('img.burgerpic').on('click', function () {
   $('div.menu-content').toggle();
 })
 
+$('.deck-button').on('click', '.select-trips', function () {
+  alert('myTrips is a premium feature!\n\nPlease contact Three Amigos Consulting\n\nfor pricing and additional information.');
+});
