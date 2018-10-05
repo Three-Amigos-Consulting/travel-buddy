@@ -1,11 +1,15 @@
 console.log('app.js');
-// $('.select').on('click', function(){
-//   console.log('test');
-//   alert('Please become a Premium User to use \'Save\' your results. Thank you.');
-// });
+$('.parent').on('click', '.select-trips', function () {
+  alert('Please become a Premium User \n to \'Save\' your results. Thank you.');
+});
+$('.deck-button').on('click', '.select-hotel', function () {
+  $('.detail-data').toggle('hide-me');
+});
+$('.deck-button-too').on('click', '.select-restaurant', function () {
+  $('.detail-data-too').toggle('hide-me-too');
+});
 
-
-
-$('img.burgerpic').on('click', function(){
+$('img.burgerpic').on('click', function () {
   $('div.menu-content').toggle();
 })
+
