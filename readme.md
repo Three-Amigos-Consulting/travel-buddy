@@ -28,30 +28,38 @@ Database Schema can be found in [travel_budy_schema.sql](travel_budy_schema.sql)
 
 ## Change Log
 #### 10-01-2018
-* (DC/AF/RM) - Finsihed standup and presented concepts to approval team.
+* (DC/AF/RM) - Finished standup and presented concepts to approval team.
 * (DC) - Setup GitHub Organization and created repo and project workflow centers
 * (AF) - Began to find data on Big Mac Index, and added this data with Currency Exchange Rate data.
 * (DC) - Initial scaffolding finished.  Pushed to master with development branch created.
 * (RM) - API response coming back properly from rest countries API, google maps, exchange rates api, fixer.io, google places, and assisted Andy with structuring the SQL database.
+
 #### 10-02-2018
-* (DC) Finished wireframe drawings for Results/My Trips, Detail, and Index. Purchased travel-buddy.website.
-* 10-02-2018
+* (DC) - Finished wireframe drawings for Results/My Trips, Detail, and Index. Purchased travel-buddy.website.
+* (AF/RM) - Began to plan out API call and constructor function for currency data. Mapped out our planned code and tested calls.
+* (RM/AF) - Tested many different API calls to find the best suitable for our needs.
+
 #### 10-03-2018
 * (DC) - merged current Wireframe info.
 * (DC/AF/RM) - Successfully created helper functions to gather data for merging current data with existing data.
 * (DC/AF/RM) - Successfully merged data and updated database.
 * (AF/DC) - Successfully rendered data to explore page.
 * (DC) - Fixed refresh bug in explore, sorted array
-* 
+
 #### 10-04-2018
 * (DC) - worked on debugging Heroku deployment after successful creation of detail render.
-* (RM/AF) - 
-* (AF/RM) - 
+* (RM/AF) - Worked on API calls and constructor functions for Hotel / Restaurant data.
+* (AF/RM) - Attemped to make a function to use photo reference and grab the hotel/restaurant image URL redirect link. Did not have time to finalize.
 * (DC) - worked on detail layout and consistent CSS across pages
 * (AF) - worked on About Us page
-* (RM) - worked on a brief explanation about the Big Mac Index
+* (RM) - worked on a brief explanation about the Big Mac Index and jQuery listeners
+
 #### 10-05-2018
-* 
+* (AF/DC) - Worked on nav bar styling, and navbar dropdown menu.
+* (RM) - Developed jQuery event handlers for toggling Hotel and Restaurant results and alert prompt.
+* (DC/RM/AF) - Finished up CSS styling for desktop.
+* (DC/RM/AF) - Practiced presentation.
+
 ## The Big Mac Index
 Currency exchange rates alone are not enough to determine the value of the US Dollar (USD) in other countries because the spending power of the local currency will vary from country to country.  This creates a need to find a common product that is consistent from country to country and do a comparison of its value in USD. 
 
@@ -74,4 +82,4 @@ Additional information and reading about the Big Mac Index can be found in the C
 * The Economist - [Big Mac Index](https://www.statista.com/statistics/274326/big-mac-index-global-prices-for-a-big-mac/)
 * [Fixer](fixer.io) - Currency exchange rates - we purchased the preimum package to provide the best results.
 * [Rest Countries](restcountries.eu) - provided country capitals and flag URLs.
-* [Google Places](https://developers.google.com/places/web-service/intro).
+* [Google Places](https://developers.google.com/places/web-service/intro) - multiple calls to generate results.
