@@ -8,16 +8,40 @@
 }
 
 nav {
+  border: 2px solid black;
+  /* background-image: url("../images/big-mac-cropped.png"); */
+  background-size: 90% 60%;
+  background-repeat:no-repeat;
+  background-position:center;
     width:25%;
     margin-right:10px;
-    display:flex;
-    justify-content: flex-end;
+    /* display:flex;
+    justify-content: flex-end; */
+    color:steelblue;
+}
+
+.burgerpic {
+  width:90%;
+  height:60%;
 }
 
 .hamburger-menu {
   width: 75%;
   height:50%;
   /* border:1px solid black; */
+}
+
+.menu-content {
+  position: absolute;
+  display:none;
+  padding:10px;
+}
+
+nav li:hover {
+  background-color:#f9f9f9;
+}
+nav li h3:hover {
+  color:black;
 }
 
 /* COUNTRY DECK */
@@ -101,20 +125,40 @@ nav {
 display:none;
 }
 
-/* .show {
-   
-
-} */
-
-
 /* ============================
 BEGIN TABLET/DESKTOP SCREENS
 ============================ */
 
 @media screen and (min-width: 481px) {
+  nav {
+    width:90%;
+    height:60%;
+    display:flex;
+    justify-content: space-between;
+  }
+
  .flag {
    background-color:blue;
    height:500px;
  }
-  
+ 
+ .burgerpic {
+   display:none;
+ }
+
+ nav li {
+   display:inline-block;
+   margin-right: 25px;
+
+ }
+ .title {
+  width: 40%;
+  margin-left:10px;
+  /* border:1px solid black; */
+  text-align: center;
+}
+
+.menu-content {
+  display: inherit;
+}
 }
