@@ -52,6 +52,7 @@ app.set('view engine', 'ejs');
 app.get('/', renderHomePage);
 app.get('/explore', getSQL);
 app.get('/details/:id', getCountry);
+app.get('/big-mac-index', renderBigMac)
 app.get('/aboutus', renderAboutUs);
 
 //Set the catch all route
@@ -85,7 +86,9 @@ Countries.allCountries = [];
 // +++++++++++++++++++++++++++++++++
 
 function renderHomePage(request, response) { response.render('index'); }
+function renderBigMac(request, response) {response.render('pages/big-mac-index'); }
 function renderAboutUs(request, response) { response.render('pages/aboutus'); }
+
 // Get the API info for currency from fixer.io and returns an array of arrays with currency code and exchange rate in each array.
 function getCurrency() {
   console.log('** Retrieving Currency from API');
@@ -214,25 +217,18 @@ function getCountry(request, response) {
 
   getHotels(countryDetail)
     .then(() => getRestaurants(countryDetail)
-      .then(results => {
-        console.log(Hotels.allHotels)
+      .then(() => {
+        // console.log(Hotels.allHotels)
         response.render('pages/detail/show', {
           country: countryDetail,
-          restaurants: results,
+          restaurants: Restaurants.allRestaurants,
           hotels: Hotels.allHotels
         })
       }
       ))
     .catch(err => processErrors(err, response))
 
-  // return response.render('pages/detail/show', { country: countryDetail, restuarants: Restaurants.allRestaurants, hotels: Hotels.allHotels });
-
 }
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//                                 TESTING GOOGLE MAPS/PLACES                                    //
-///////////////////////////////////////////////////////////////////////////////////////////////////
 
 function getHotels(obj) {
   console.log('Getting Hotel Function');
@@ -289,8 +285,8 @@ function getRestaurants(obj) {
       // console.log(Restaurants.allRestaurants.length)
       Restaurants.allRestaurants.sort((a, b) => b.rating - a.rating);
       // console.log(Restaurants.allRestaurants);
-
-      return foodData;
+      Restaurants.allRestaurants.length = 5;
+      // return foodData;
     })
   // .catch(err => processErrors(err));
 }
