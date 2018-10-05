@@ -71,6 +71,7 @@ Additional information and reading about the Big Mac Index can be found in the C
 * Allie, Sam, John, Michelle, Brian, and Brook for their help with the Heroku Deployment issue.
 
 ### Resources
+Eric Meyers Reset CSS - [reset.css](http://meyerweb.com/eric/tools/css/reset/)
 * The Economist - [Big Mac Index](https://www.statista.com/statistics/274326/big-mac-index-global-prices-for-a-big-mac/)
 * [Fixer](fixer.io) - Currency exchange rates - we purchased the preimum package to provide the best results.
 * [Rest Countries](restcountries.eu) - provided country capitals and flag URLs.

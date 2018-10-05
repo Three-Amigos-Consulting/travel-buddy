@@ -8,10 +8,21 @@
 }
 
 nav {
+  border: 2px solid black;
+  /* background-image: url("../images/big-mac-cropped.png"); */
+  background-size: 90% 60%;
+  background-repeat:no-repeat;
+  background-position:center;
     width:25%;
     margin-right:10px;
-    display:flex;
-    justify-content: flex-end;
+    /* display:flex;
+    justify-content: flex-end; */
+    color:steelblue;
+}
+
+.burgerpic {
+  width:90%;
+  height:60%;
 }
 
 .hamburger-menu {
@@ -19,6 +30,35 @@ nav {
   height:50%;
   /* border:1px solid black; */
 }
+
+.menu-content {
+  background-color: steelblue;
+  position: absolute;
+  display:none;
+  padding:10px;
+}
+
+nav h3 {
+  color:white;
+}
+
+nav li h3:hover {
+  color:black;
+}
+
+nav li{
+  margin-bottom: 10px;
+}
+nav a {
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color:#f9f9f9;
+}
+/* nav li h3:hover {
+  color:black;
+} */
 
 /* COUNTRY DECK */
 
@@ -28,7 +68,7 @@ nav {
   border: 2px solid black;
   background-color: rgba(0, 0, 0, 0.60);
   box-shadow: 10px 10px 15px  rgba(0, 0, 0, 0.75);
-  
+  text-align:center;
   }
 
   .deck h1 {
@@ -50,19 +90,37 @@ nav {
   width: 75%;
   margin: 0px auto 25px auto;
   color:white;
-}
-
-.deck-button {
-  width: 75%;
-  height: 50px;
-  margin: 0px auto 25px auto;
   text-align: center;
 }
 
+.deck-text p {
+  line-height: 150%;
+  text-align: center;
+}
+
+.deck-text a{
+  color:greenyellow;
+}
 
 
-.select {
-  margin:5px auto;
+.deck-button, .deck-button-too, .parent {
+  width: 75%;
+  margin: 15px auto 0px auto;
+  text-align: center;
+}
+
+.select-trips {
+  margin: 5px auto;
+  border: none;
+  box-shadow: 2px 2px 1px grey;
+  background-color: rgb(22, 96, 192);
+  font-family: 'Roboto', sans-serif;
+  font-size: 125%;
+  color: white;
+}
+
+.select, .select-hotel, .select-restaurant {
+  margin: 5px auto;
   padding: 0 20px;
   border: none;
   box-shadow: 2px 2px 1px grey;
@@ -72,10 +130,20 @@ nav {
   color: white;
 }
 
-.detail-data {
+
+.color {
+  margin: 5px auto;
+  color: rgb(72, 255, 0);
+}
+
+.detail-data, .deatil-data-too {
   width:75%;
   margin: 0px auto 20px auto;
   /* border: 1px solid lightskyblue; */
+}
+
+.hide-me, .hide-me-too {
+  display: none;
 }
 
 .detail-name {
@@ -97,24 +165,41 @@ nav {
 }
 
 
-.hide {
-display:none;
-}
+ /* ============================
+ BEGIN TABLET/DESKTOP SCREENS
+ ============================ */
+ 
+ @media screen and (min-width: 481px) {
+  nav {
+    width:90%;
+    height:60%;
+    display:flex;
+    justify-content: space-between;
+  }
 
-/* .show {
-   
-
-} */
-
-
-/* ============================
-BEGIN TABLET/DESKTOP SCREENS
-============================ */
-
-@media screen and (min-width: 481px) {
  .flag {
    background-color:blue;
    height:500px;
  }
-  
+ 
+ .burgerpic {
+   display:none;
+ }
+
+ nav li {
+   display:inline-block;
+   margin-right: 25px;
+
+ }
+ .title {
+  width: 40%;
+  margin-left:10px;
+  /* border:1px solid black; */
+  text-align: center;
 }
+
+.menu-content {
+  display: inherit;
+}
+}
+

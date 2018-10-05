@@ -4,10 +4,10 @@
     Last Updated:
   </h2>
 
-  <h2>
+  <h3 class="color">
     <% let d = new Date(country.created_date).toString().slice(0, 15); %>
     <%- d %>
-  </h2>
+  </h3>
 
   <div class="flag">
     <img src="<%- country.flag_url %>">
@@ -18,16 +18,18 @@
       <%- country.country_name %>
     </h2>
 
-    <h2>
+    <h3>
       Capital City:
       <%- country.capital %>
-    </h2>
+    </h3>
+
+    </br>
 
     <h3>
       Exchange Rate:
     </h3>
 
-    <h3>
+    <h3 class="color">USD 1 =
       <%- country.exchange_rate %>
       <%- country.currency_code %>
     </h3>
@@ -35,8 +37,13 @@
   </div>
 </div>
 
-<div class="deck">
-  <div class="detail-data">
+
+
+<div class="deck-button">
+  <button class="select-hotel" type="button">Hotel Options</button>
+</div>
+<div class="detail-data hide-me">
+  <div class="deck">
     <% hotels.forEach(hotel => {%>
     <div class="detail-name">
       <h2>
@@ -53,13 +60,13 @@
     </div>
     <% }) %>
   </div>
-  <div class="deck-button">
-    <button type="button" class="select">Hotel Options</button>
-  </div>
-
 </div>
-<div class="deck">
-  <div class="detail-data">
+
+<div class="deck-button-too">
+  <button class="select-restaurant" type="button">Restaurants</button>
+</div>
+<div class="detail-data-too hide-me-too">
+  <div class="deck">
     <% restaurants.forEach(restaurant => {%>
     <div class="detail-name">
       <h2>
@@ -80,14 +87,7 @@
     </div>
     <% }) %>
   </div>
-  <div class="deck-button">
-    <button type="button" class="select">Restaurants</button>
-  </div>
 </div>
-<button type="button" class="select">Add to My Trips</button>
-
-
-
-</body>
-
-</html>
+<div class="parent">
+  <button class="select-trips" type="button">Add to myTrips</button>
+</div>

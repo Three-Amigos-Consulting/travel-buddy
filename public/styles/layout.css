@@ -4,6 +4,9 @@
   }
 
   header{
+    position:fixed;
+    top: 0;
+    right:0;
     height: 100px;
     background-image: url('../images/worldmap-mobile.jpg');
     background-color:darkgray;
@@ -20,7 +23,7 @@
   }
 
   h2 {
-    margin: 5px auto;
+    margin: 10px auto;
     font-size: 150%;
     font-weight: bold;
     text-align: center;
@@ -30,6 +33,7 @@
     color: white;
   }
 
+ 
   .profilepic {
     width:100%;
     border-radius: 10px;
@@ -40,7 +44,7 @@ BEGIN TABLET/DESKTOP SCREENS
 ============================ */
 
 @media screen and (min-width: 481px) {
-  
+
    
   header {
     font-family: 'Baloo Tamma', cursive;

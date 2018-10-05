@@ -4,3 +4,8 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+.profile-links {
+  text-decoration: none;
+  color: white;
+  }
