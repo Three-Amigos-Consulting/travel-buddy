@@ -35,53 +35,57 @@
   </div>
 </div>
 
-<div class="deck-button">
-  <div class="hotel">
+<div class="deck">
+  <div class="detail-data">
     <% hotels.forEach(hotel => {%>
-    <div id="<%- hotel.name%>">
-      <p>
+    <div class="detail-name">
+      <h2>
         <%- hotel.name%>
-      </p>
-      <p>
+      </h2>
+      <h3 class="rating-price">
         Rating:
         <%- hotel.rating%>
-      </p>
-      <p>
+      </h3>
+      <h3>
         <%- hotel.address%>
-      </p>
+      </h3>
       </br>
     </div>
     <% }) %>
   </div>
-
-  <button type="button" class="select">Hotel Options</button>
-
-  <div class="restaurants">
-    <% restaurants.forEach(restaurant => {%>
-    <div id="<%- restaurant.name%>">
-      <p>
-        <%- restaurant.name%>
-      </p>
-      <p>
-        Rating:
-        <%- restaurant.rating%> stars
-      </p>
-      <p>
-        Price:
-        <%- restaurant.price%>
-      </p>
-      <p>
-        <%- restaurant.address%>
-      </p>
-      </br>
-    </div>
-    <% }) %>
+  <div class="deck-button">
+    <button type="button" class="select">Hotel Options</button>
   </div>
-  <button type="button" class="select">Restaurants</button>
-
-  <button type="button" class="select">Add to My Trips</button>
 
 </div>
+<div class="deck">
+  <div class="detail-data">
+    <% restaurants.forEach(restaurant => {%>
+    <div class="detail-name">
+      <h2>
+        <%- restaurant.name%>
+      </h2>
+      <h3 class="rating-price">
+        Rating:
+        <%- restaurant.rating%> stars
+      </h3>
+      <h3 class="rating-price">
+        Price:
+        <%- restaurant.price%>
+      </h3>
+      <h3>
+        <%- restaurant.address%>
+      </h3>
+      </br>
+    </div>
+    <% }) %>
+  </div>
+  <div class="deck-button">
+    <button type="button" class="select">Restaurants</button>
+  </div>
+</div>
+<button type="button" class="select">Add to My Trips</button>
+
 
 
 </body>

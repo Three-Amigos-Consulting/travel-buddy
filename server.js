@@ -1,4 +1,4 @@
-'strict';
+'use strict';
 
 // ===========================
 // Build out the initial server
@@ -85,8 +85,8 @@ Countries.allCountries = [];
 // Helper functions
 // +++++++++++++++++++++++++++++++++
 
-function renderHomePage(request, response) { response.render('index'); }
-function renderBigMac(request, response) {response.render('pages/big-mac-index'); }
+function renderHomePage(request, response) { response.render('pages/index'); }
+function renderBigMac(request, response) { response.render('pages/big-mac-index'); }
 function renderAboutUs(request, response) { response.render('pages/aboutus'); }
 
 // Get the API info for currency from fixer.io and returns an array of arrays with currency code and exchange rate in each array.
