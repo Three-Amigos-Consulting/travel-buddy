@@ -8,16 +8,40 @@
 }
 
 nav {
+  border: 2px solid black;
+  /* background-image: url("../images/big-mac-cropped.png"); */
+  background-size: 90% 60%;
+  background-repeat:no-repeat;
+  background-position:center;
     width:25%;
     margin-right:10px;
-    display:flex;
-    justify-content: flex-end;
+    /* display:flex;
+    justify-content: flex-end; */
+    color:steelblue;
+}
+
+.burgerpic {
+  width:90%;
+  height:60%;
 }
 
 .hamburger-menu {
   width: 75%;
   height:50%;
   /* border:1px solid black; */
+}
+
+.menu-content {
+  position: absolute;
+  display:none;
+  padding:10px;
+}
+
+nav li:hover {
+  background-color:#f9f9f9;
+}
+nav li h3:hover {
+  color:black;
 }
 
 /* COUNTRY DECK */
@@ -28,7 +52,7 @@ nav {
   border: 2px solid black;
   background-color: rgba(0, 0, 0, 0.60);
   box-shadow: 10px 10px 15px  rgba(0, 0, 0, 0.75);
-  
+  text-align:center;
   }
 
   .deck h1 {
@@ -50,6 +74,7 @@ nav {
   width: 75%;
   margin: 0px auto 25px auto;
   color:white;
+  text-align: center;
 }
 
 .deck-button, .deck-button-too {
@@ -78,6 +103,12 @@ nav {
   font-family: 'Roboto', sans-serif;
   font-size: 125%;
   color: white;
+}
+
+
+.color {
+  margin: 5px auto;
+  color: rgb(72, 255, 0);
 }
 
 .detail-data, .deatil-data-too {
@@ -109,24 +140,41 @@ nav {
 }
 
 
-.hide {
-display:none;
-}
+ /* ============================
+ BEGIN TABLET/DESKTOP SCREENS
+ ============================ */
+ 
+ @media screen and (min-width: 481px) {
+  nav {
+    width:90%;
+    height:60%;
+    display:flex;
+    justify-content: space-between;
+  }
 
-/* .show {
-   
-
-} */
-
-
-/* ============================
-BEGIN TABLET/DESKTOP SCREENS
-============================ */
-
-@media screen and (min-width: 481px) {
  .flag {
    background-color:blue;
    height:500px;
  }
-  
+ 
+ .burgerpic {
+   display:none;
+ }
+
+ nav li {
+   display:inline-block;
+   margin-right: 25px;
+
+ }
+ .title {
+  width: 40%;
+  margin-left:10px;
+  /* border:1px solid black; */
+  text-align: center;
 }
+
+.menu-content {
+  display: inherit;
+}
+}
+

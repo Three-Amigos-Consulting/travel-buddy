@@ -20,7 +20,7 @@
   }
 
   h2 {
-    margin: 5px auto;
+    margin: 10px auto;
     font-size: 150%;
     font-weight: bold;
     text-align: center;
@@ -30,6 +30,11 @@
     color: white;
   }
 
+  h3 {
+    color:#034f84;
+    background-color: #92a8d1;
+    opacity:.75;
+  }
   .profilepic {
     width:100%;
     border-radius: 10px;
@@ -40,7 +45,7 @@ BEGIN TABLET/DESKTOP SCREENS
 ============================ */
 
 @media screen and (min-width: 481px) {
-  
+
    
   header {
     font-family: 'Baloo Tamma', cursive;
