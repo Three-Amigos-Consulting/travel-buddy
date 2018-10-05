@@ -7,7 +7,7 @@
     height: 100px;
     background-image: url('../images/worldmap-mobile.jpg');
     background-color:darkgray;
-    box-shadow: 3px 3px 2px black;
+    box-shadow: 8px 3px 4px black;
     display: flex;
     align-items:center;
     /* justify-content: space-between; */
@@ -15,15 +15,20 @@
   }
 
   h1 {
-    font-size: 200%;
+    font-size: 250%;
+    font-family: 'Acme', sans-serif;
   }
 
   h2 {
     font-size: 150%;
-    font-weight: bold;
+    /* font-weight: bold; */
     text-align: center;
-    font-family: 'Baloo Tamma', cursive;
+    font-family: 'Roboto', sans-serif;
+    line-height: 110%; 
+    
   }
+
+  
   
   .profilepic {
     width:100%;

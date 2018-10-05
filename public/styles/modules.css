@@ -4,6 +4,7 @@
   width: 75%;
   margin-left:10px;
   border:1px solid black;
+  text-align: center;
 }
 
 nav {
@@ -14,7 +15,7 @@ nav {
 }
 
 .hamburger-menu {
-  width: 100%;
+  width: 75%;
   height:50%;
   border:1px solid black;
 }
@@ -25,13 +26,13 @@ nav {
   width:75%;
   margin: 60px auto 0px auto;
   border: 2px solid black;
-  background-color: rgba(0, 0, 0, 0.5);
-  box-shadow: 3px 3px 3px grey;
+  background-color: rgba(0, 0, 0, 0.60);
+  box-shadow: 10px 10px 15px  rgba(0, 0, 0, 0.75);
   
   }
 
   .deck h1 {
-    margin: 5px 0px 0px 5px;
+    margin: 10px 0px 10px 10px;
     color:white;
     font-weight:bold;
   }
@@ -61,12 +62,15 @@ nav {
   text-align: center;
 }
 
+
+
 .select {
   margin:5px auto;
+  padding: 0 20px;
   border: none;
   box-shadow: 2px 2px 1px grey;
   background-color: rgb(22, 96, 192);
-  font-family: 'Baloo Tamma', cursive;
+  font-family: 'Roboto', sans-serif;
   font-size: 125%;
   color: white;
 }
