@@ -32,17 +32,33 @@ nav {
 }
 
 .menu-content {
+  background-color: steelblue;
   position: absolute;
   display:none;
   padding:10px;
 }
 
-nav li:hover {
-  background-color:#f9f9f9;
+nav h3 {
+  color:white;
 }
+
 nav li h3:hover {
   color:black;
 }
+
+nav li{
+  margin-bottom: 10px;
+}
+nav a {
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color:#f9f9f9;
+}
+/* nav li h3:hover {
+  color:black;
+} */
 
 /* COUNTRY DECK */
 
@@ -77,10 +93,19 @@ nav li h3:hover {
   text-align: center;
 }
 
-.deck-button, .deck-button-too {
+.deck-text p {
+  line-height: 150%;
+  text-align: center;
+}
+
+.deck-text a{
+  color:greenyellow;
+}
+
+
+.deck-button, .deck-button-too, .parent {
   width: 75%;
-  height: 50px;
-  margin: 0px auto 25px auto;
+  margin: 15px auto 0px auto;
   text-align: center;
 }
 
@@ -95,7 +120,7 @@ nav li h3:hover {
 }
 
 .select, .select-hotel, .select-restaurant {
-  margin:5px auto;
+  margin: 5px auto;
   padding: 0 20px;
   border: none;
   box-shadow: 2px 2px 1px grey;
