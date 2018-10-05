@@ -4,10 +4,10 @@
     Last Updated:
   </h2>
 
-  <h2>
+  <h3 class="color">
     <% let d = new Date(country.created_date).toString().slice(0, 15); %>
     <%- d %>
-  </h2>
+  </h3>
 
   <div class="flag">
     <img src="<%- country.flag_url %>">
@@ -18,16 +18,18 @@
       <%- country.country_name %>
     </h2>
 
-    <h2>
+    <h3>
       Capital City:
       <%- country.capital %>
-    </h2>
+    </h3>
+
+    </br>
 
     <h3>
       Exchange Rate:
     </h3>
 
-    <h3>
+    <h3 class="color">USD 1 =
       <%- country.exchange_rate %>
       <%- country.currency_code %>
     </h3>
