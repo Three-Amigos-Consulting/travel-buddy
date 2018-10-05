@@ -1,4 +1,4 @@
-'strict';
+'use strict';
 
 // ===========================
 // Build out the initial server
