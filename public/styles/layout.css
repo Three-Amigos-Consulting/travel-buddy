@@ -25,7 +25,10 @@
     font-family: 'Baloo Tamma', cursive;
   }
   
-
+  .profilepic {
+    width:100%;
+    border-radius: 10px;
+  }
 
 /* ============================
 BEGIN TABLET/DESKTOP SCREENS

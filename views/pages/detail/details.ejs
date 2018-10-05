@@ -1,7 +1,7 @@
 <div class="deck">
 
   <h1>
-    Last Updated:
+    <%- country.created_date %>
   </h1>
 
   <div class="flag">
@@ -15,7 +15,22 @@
   </div>
 
   <div class="deck-button">
-
+    <div class="hotel">
+      <% hotels.forEach(hotel => {%>
+      <div id="<%- hotel.name%>">
+        <p>
+          <%- hotel.name%>
+        </p>
+        <p>
+          <%- hotel.ratings%>
+        </p>
+        <p>
+          <%- hotel.address%>
+        </p>
+        </br>
+      </div>
+      <% }) %>
+    </div>
     <button type="button" class="select">Hotel Options</button>
     <button type="button" class="select">Restaurants</button>
     <button type="button" class="select">Add to My Trips</button>

@@ -52,6 +52,7 @@ app.set('view engine', 'ejs');
 app.get('/', renderHomePage);
 app.get('/explore', getSQL);
 app.get('/details/:id', getCountry);
+app.get('/aboutus', renderAboutUs);
 
 //Set the catch all route
 app.get('*', (request, response) => response.status(404).render('pages/404-error.ejs', { errorResult: '' }));
@@ -84,17 +85,19 @@ Countries.allCountries = [];
 // +++++++++++++++++++++++++++++++++
 
 function renderHomePage(request, response) { response.render('index'); }
-
+function renderAboutUs(request, response) { response.render('pages/aboutus'); }
 // Get the API info for currency from fixer.io and returns an array of arrays with currency code and exchange rate in each array.
 function getCurrency() {
   console.log('** Retrieving Currency from API');
-  const url = `http://data.fixer.io/api/latest?access_key=${process.env.FIXER_API_KEY}&base=USD`;
+  const url = `https://data.fixer.io/api/latest?access_key=${process.env.FIXER_API_KEY}&base=USD`;
 
+  let ratesArray = [];
   return superagent(url)
     .then(result => {
-      let ratesArray = Object.entries(result.body.rates);
+      ratesArray = Object.entries(result.body.rates);
       return ratesArray;
     })
+    .catch(err => processErrors(err))
 }
 
 // Get API info from RESTcountries to populate capital and flag_url info.  The function will receive information from our SQL database to limit the countries being requested.
@@ -137,11 +140,17 @@ function getSQL(request, response) {
     // First get the data from the SQL server
     .then(results => countriesDB = results.rows)
     // Use the SQL data to help get capitals and flags
-    .then(countries => getCapitalsAndFlags(countries)
-      .then(capsAndFlags => capitalsAndFlags = capsAndFlags))
+    .then(countries => getCapitalsAndFlags(countries))
+    .then(capsAndFlags => {
+      capitalsAndFlags = capsAndFlags;
+    })
     // Get the current currency rates
-    .then(getCurrency()
-      .then(rates => currency = rates))
+    .then(getCurrency)
+    .catch(err => processErrors(err))
+    .then(rates => {
+      currency = rates;
+    })
+    .catch(err => processErrors(err))
     // Update data with the retrived information and calculate the current Big Mac Index for each country
     .then(() => {
       countriesDB.forEach(country => {
@@ -172,6 +181,8 @@ function getSQL(request, response) {
 function updateCountryDb() {
   console.log('**** UPDATING SQL Database');
 
+  // console.log(Countries.allCountries);
+
   Countries.allCountries.forEach(country => {
     let { id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date } = country;
 
@@ -201,12 +212,129 @@ function getCountry(request, response) {
   })
   console.log(countryDetail);
 
-  return response.render('pages/detail/show', { country: countryDetail });
+  getHotels(countryDetail)
+    .then(() => getRestaurants(countryDetail)
+      .then(results => {
+        console.log(Hotels.allHotels)
+        response.render('pages/detail/show', {
+          country: countryDetail,
+          restaurants: results,
+          hotels: Hotels.allHotels
+        })
+      }
+      ))
+    .catch(err => processErrors(err, response))
+
+  // return response.render('pages/detail/show', { country: countryDetail, restuarants: Restaurants.allRestaurants, hotels: Hotels.allHotels });
 
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                 TESTING GOOGLE MAPS/PLACES                                    //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+function getHotels(obj) {
+  console.log('Getting Hotel Function');
+  const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=hotels+in+${obj.capital},${obj.country_name}&key=${process.env.GOOGLE_API_KEY}`
+
+  return superagent(url)
+    .then(result => {
+      let hotelData = [];
+      result.body.results.forEach(data => {
+        // console.log(data);
+        hotelData.push({
+          name: data.name,
+          rating: data.rating,
+          address: data.formatted_address,
+          photos: data.photos[0].photo_reference,
+          latitude: data.geometry.location.lat,
+          longitude: data.geometry.location.lng
+        });
+      })
+      hotelData.forEach(hotel => {
+        Hotels.allHotels.push(new Hotels(hotel));
+      })
+      // console.log(Hotels.allHotels.length)
+      Hotels.allHotels.sort((a, b) => b.rating - a.rating);
+      Hotels.allHotels.length = 5;
+      // console.log(Hotels.allHotels);
+      // return hotelData;
+    })
+    .catch(err => processErrors(err));
+}
+
+function getRestaurants(obj) {
+  console.log('Getting Restaurant Function')
+  const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+${obj.capital},${obj.country_name}&key=${process.env.GOOGLE_API_KEY}`
+
+  return superagent(url)
+    .then(result => {
+      let foodData = [];
+      result.body.results.forEach(data => {
+        foodData.push({
+          name: data.name,
+          rating: data.rating,
+          price: data.price_level,
+          address: data.formatted_address,
+          photos: data.photos[0].photo_reference,
+          latitude: data.geometry.location.lat,
+          longitude: data.geometry.location.lng,
+        });
+      })
+      // console.log(foodData);
+      foodData.forEach(food => {
+        Restaurants.allRestaurants.push(new Restaurants(food));
+      })
+      // console.log(Restaurants.allRestaurants.length)
+      Restaurants.allRestaurants.sort((a, b) => b.rating - a.rating);
+      // console.log(Restaurants.allRestaurants);
+
+      return foodData;
+    })
+  // .catch(err => processErrors(err));
+}
+
+// function getImageURL(data) {
+//   const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${data.photos}&key=${process.env.GOOGLE_API_KEY}`
+
+//   return superagent(url)
+//     .then(result => {
+//       return result.request.url
+//     })
+// }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                     GOOGLE CONSTRUCTORS                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+function Restaurants(data) {
+  this.name = data.name;
+  this.price = data.price || 'Not Available';
+  this.rating = data.rating;
+  this.address = data.address;
+  this.latitude = data.latitude;
+  this.longitude = data.longitude;
+  this.photos = data.photos;
+}
+
+Restaurants.allRestaurants = [];
+
+function Hotels(data) {
+  this.name = data.name;
+  this.rating = data.rating;
+  this.address = data.address;
+  this.latitude = data.latitude;
+  this.longitude = data.longitude;
+  this.photos = data.photos
+}
+
+Hotels.allHotels = [];
+
+
 
 // Error Handler
 function processErrors(err) {
   console.error(err);
-  // response.render('pages/404-error', { errorResult: error })
 }
