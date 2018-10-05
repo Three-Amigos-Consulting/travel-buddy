@@ -52,16 +52,24 @@ nav {
   color:white;
 }
 
-.deck-button {
+.deck-button, .deck-button-too {
   width: 75%;
   height: 50px;
   margin: 0px auto 25px auto;
   text-align: center;
 }
 
+.select-trips {
+  margin: 5px auto;
+  border: none;
+  box-shadow: 2px 2px 1px grey;
+  background-color: rgb(22, 96, 192);
+  font-family: 'Roboto', sans-serif;
+  font-size: 125%;
+  color: white;
+}
 
-
-.select {
+.select, .select-hotel, .select-restaurant {
   margin:5px auto;
   padding: 0 20px;
   border: none;
@@ -72,10 +80,14 @@ nav {
   color: white;
 }
 
-.detail-data {
+.detail-data, .deatil-data-too {
   width:75%;
   margin: 0px auto 20px auto;
   /* border: 1px solid lightskyblue; */
+}
+
+.hide-me, .hide-me-too {
+  display: none;
 }
 
 .detail-name {
