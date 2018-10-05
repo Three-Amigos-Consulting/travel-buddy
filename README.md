@@ -19,7 +19,6 @@ This project uses the following technologies:
 * express: ```npm i express```
 * superagent: ```npm i superagent```
 * dotenv: ```npm i dotenv```
-* method-overide ```npm i method-overide```
 * Heroku deployment: dc-af-rm-travelbuddy.herokuapp.com
 * Live site: [www.travel-buddy.website](www.travel-buddy.website)
 

@@ -3,13 +3,13 @@
 
 <%- include('../layout/head')%>
 
-<%- include('../layout/header')%>
 
 <body>
-
-<%- include('details', {country, restaurants, hotels})%>
-
-<%- include('../layout/footer')%>
+  <%- include('../layout/header')%>
+  <div class="not-mobile">
+    <%- include('details', {country, restaurants, hotels})%>
+  </div>
+  <%- include('../layout/footer')%>
 
 </body>
 

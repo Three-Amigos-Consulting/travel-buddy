@@ -3,36 +3,37 @@
 
 <%- include('../layout/head')%>
 
-<%- include('../layout/header')%>
 
 <body>
-  <% countries.forEach( (country, index) => { %>
-  <div class="deck">
+  <%- include('../layout/header')%>
+  <div class="not-mobile">
+    <% countries.forEach( (country, index) => { %>
+    <div class="deck">
 
-    <h1>
-      #
-      <%- index+1 %>
-    </h1>
+      <h1>
+        #
+        <%- index+1 %>
+      </h1>
 
-    <div class="flag">
-      <img src="<%- country.flag_url %>">
+      <div class="flag">
+        <img src="<%- country.flag_url %>">
+      </div>
+
+      <div class="deck-text">
+        <h2>
+          <%- country.country_name %>
+        </h2>
+      </div>
+
+      <div class="deck-button">
+
+        <a href="/details/<%- country.id%>">
+          <button class="select">More Info</button></a>
+      </div>
+
     </div>
-
-    <div class="deck-text">
-      <h2>
-        <%- country.country_name %>
-      </h2>
-    </div>
-
-    <div class="deck-button">
-
-      <a href="/details/<%- country.id%>">
-        <button class="select">More Info</button></a>
-    </div>
-
+    <% }) %>
   </div>
-  <% }) %>
-
   <%- include('../layout/footer')%>
 
 </body>

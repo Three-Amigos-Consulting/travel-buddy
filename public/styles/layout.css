@@ -3,7 +3,7 @@
     background-color: lightskyblue;
   }
 
-  header{
+  header {
     position:fixed;
     top: 0;
     right:0;
@@ -45,10 +45,18 @@ BEGIN TABLET/DESKTOP SCREENS
 
 @media screen and (min-width: 481px) {
 
+  .not-mobile {
+    display:flex;
+    flex-wrap:wrap;
+  }
    
   header {
+    position:fixed;
+    top: 0;
+    left:0;
     font-family: 'Baloo Tamma', cursive;
     
   }
+
   
 }

@@ -7,7 +7,7 @@
 //Required Dependencies
 const express = require('express');
 const superagent = require('superagent');
-// const cors = require('cors');
+
 const pg = require('pg');
 
 require('dotenv').config();
@@ -31,18 +31,6 @@ client.on('error', err => console.error(err));
 
 // Tell express to use EJS files
 app.set('view engine', 'ejs');
-
-
-// Method Override
-// app.use(methodOverride((request, response) => {
-//   if (request.body && typeof request.body === 'object' && '_method' in request.body) {
-//     // look in urlencoded POST bodies and delete it
-//     let method = request.body._method;
-//     delete request.body._method;
-//     return method;
-//   }
-// }))
-
 
 // ++++++++++++++++
 // Routes to listen
@@ -237,6 +225,7 @@ function getHotels(obj) {
   return superagent(url)
     .then(result => {
       let hotelData = [];
+      Hotels.allHotels = [];
       result.body.results.forEach(data => {
         // console.log(data);
         hotelData.push({
@@ -267,6 +256,7 @@ function getRestaurants(obj) {
   return superagent(url)
     .then(result => {
       let foodData = [];
+      Restaurants.allRestaurants = [];
       result.body.results.forEach(data => {
         foodData.push({
           name: data.name,
@@ -286,23 +276,8 @@ function getRestaurants(obj) {
       Restaurants.allRestaurants.sort((a, b) => b.rating - a.rating);
       // console.log(Restaurants.allRestaurants);
       Restaurants.allRestaurants.length = 5;
-      // return foodData;
     })
-  // .catch(err => processErrors(err));
 }
-
-// function getImageURL(data) {
-//   const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${data.photos}&key=${process.env.GOOGLE_API_KEY}`
-
-//   return superagent(url)
-//     .then(result => {
-//       return result.request.url
-//     })
-// }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//                                     GOOGLE CONSTRUCTORS                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 function Restaurants(data) {
