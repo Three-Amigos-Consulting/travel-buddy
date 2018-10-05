@@ -7,7 +7,7 @@
     height: 100px;
     background-image: url('../images/worldmap-mobile.jpg');
     background-color:darkgray;
-    box-shadow: 3px 3px 2px black;
+    box-shadow: 8px 3px 4px black;
     display: flex;
     align-items:center;
     /* justify-content: space-between; */
@@ -15,16 +15,21 @@
   }
 
   h1 {
-    font-size: 200%;
+    font-size: 250%;
+    font-family: 'Acme', sans-serif;
   }
 
   h2 {
+    margin: 5px auto;
     font-size: 150%;
     font-weight: bold;
     text-align: center;
-    font-family: 'Baloo Tamma', cursive;
+    /* font-family: 'Roboto', sans-serif; */
+    line-height: 110%;
+    letter-spacing: 2px;
+    color: white;
   }
-  
+
   .profilepic {
     width:100%;
     border-radius: 10px;
@@ -36,13 +41,7 @@ BEGIN TABLET/DESKTOP SCREENS
 
 @media screen and (min-width: 481px) {
   
-  body {
-    background-image: none;
-    background-color: purple;
-    color: red;
-    font-family: 'Roboto', sans-serif; 
-  }
-  
+   
   header {
     font-family: 'Baloo Tamma', cursive;
     
