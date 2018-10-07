@@ -27,6 +27,7 @@ This project uses the following technologies:
 Database Schema can be found in [travel_budy_schema.sql](travel_budy_schema.sql)
 
 ## File Structure
+```
 .
 ├── LICENSE
 ├── package-lock.json
@@ -66,6 +67,7 @@ Database Schema can be found in [travel_budy_schema.sql](travel_budy_schema.sql)
             ├── footer.ejs
             ├── head.ejs
             └── header.ejs
+```
 
 ## Change Log
 #### 10-01-2018
