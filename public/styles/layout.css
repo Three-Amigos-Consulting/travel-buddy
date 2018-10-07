@@ -4,16 +4,15 @@
   }
 
   header {
-    position:fixed;
-    top: 0;
-    right:0;
     height: 100px;
     background-image: url('../images/worldmap-mobile.jpg');
     background-color:darkgray;
-    box-shadow: 8px 3px 4px black;
+    position:fixed;
+    top: 0;
+    right:0;
     display: flex;
     align-items:center;
-    /* justify-content: space-between; */
+    box-shadow: 8px 3px 4px black;
     font-family: 'Baloo Tamma', cursive;
   }
 
@@ -27,7 +26,6 @@
     font-size: 150%;
     font-weight: bold;
     text-align: center;
-    /* font-family: 'Roboto', sans-serif; */
     line-height: 110%;
     letter-spacing: 2px;
     color: white;
@@ -55,7 +53,6 @@ BEGIN TABLET/DESKTOP SCREENS
     top: 0;
     left:0;
     font-family: 'Baloo Tamma', cursive;
-  
   }
 
 }

@@ -1,46 +1,44 @@
-/* HEADER */
+ /* ##### -- MOBILE LAYOUT -- ##### */
 
+/* ###-HEADER-### */
 .title {
   width: 75%;
-  margin-left:10px;
-  /* border:1px solid black; */
+  margin-left: 10px;
   text-align: center;
 }
 
 nav {
- 
+  width: 25%;
   background-size: 90% 60%;
-  background-repeat:no-repeat;
-  background-position:center;
-    width:25%;
-    margin-right:10px;
-
-    color:steelblue;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 10px;
+  color: steelblue;
 }
 
 .burgerpic {
-  width:90%;
-  height:60%;
+  width: 90%;
+  height: 60%;
 }
 
 .hamburger-menu {
   width: 75%;
-  height:50%;
+  height: 50%;
 }
 
 .menu-content {
   background-color: steelblue;
   position: absolute;
-  display:none;
-  padding:10px;
+  display: none;
+  padding: 10px;
 }
 
 nav h3 {
-  color:white;
+  color: rgb(12, 5, 5);
 }
 
 nav li h3:hover {
-  color:black;
+  color: black;
 }
 
 nav li{
@@ -51,13 +49,10 @@ nav a {
 }
 
 nav a:hover {
-  background-color:#f9f9f9;
+  background-color: #f9f9f9;
 }
-/* nav li h3:hover {
-  color:black;
-} */
 
-/* COUNTRY DECK */
+/* DECKS */
 
 .deck {
   width:75%;
@@ -99,7 +94,6 @@ nav a:hover {
   color:greenyellow;
 }
 
-
 .deck-button, .deck-button-too, .parent {
   width: 75%;
   margin: 15px auto 0px auto;
@@ -118,8 +112,8 @@ nav a:hover {
 
 .select, .select-hotel, .select-restaurant {
   margin: 5px auto;
-  padding: 0 20px;
   border: none;
+  padding: 0 20px;
   box-shadow: 2px 2px 1px grey;
   background-color: rgb(22, 96, 192);
   font-family: 'Roboto', sans-serif;
@@ -136,7 +130,6 @@ nav a:hover {
 .detail-data, .deatil-data-too {
   width:75%;
   margin: 0px auto 20px auto;
-  /* border: 1px solid lightskyblue; */
 }
 
 .hide-me, .hide-me-too {
@@ -168,8 +161,7 @@ nav a:hover {
  
  @media screen and (min-width: 481px) {
 
-/* ****NAV MENU**** */
-
+/* ****-NAV MENU-**** */
   nav {
     width: 90%;
     height: 60%;
@@ -184,10 +176,17 @@ nav a:hover {
 
  .menu-content {
   display: inherit;
-  /* position: absolute; */
   background-color: rgba(0, 0, 0, 0.60);
   box-shadow: 10px 10px 15px  rgba(0, 0, 0, 0.75);
  }
+
+ nav h3 {
+  color:white;
+}
+
+nav a {
+  text-decoration: none;
+}
 
  nav ul {
    display:flex;
@@ -198,16 +197,13 @@ nav a:hover {
  nav li {
    margin: 0px;
    padding: 0px 10px;
-   color:white;
  }
 
 nav li h3:hover {
   color:rgb(245, 236, 114);
 }
 
-nav a {
-  text-decoration: none;
-}
+
 
 /* COUNTRY DECK */
 .title {
@@ -216,8 +212,6 @@ nav a {
   /* border:1px solid black; */
   text-align: center;
 }
-
-
 
 .deck {
   width:25%;
