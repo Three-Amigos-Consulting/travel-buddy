@@ -71,15 +71,4 @@ Our process calculates the value in USD based on the updated currency rates.
 
  ``` (Local Country Big Mac Cost) / (Local currency exchange rate with USD) = (Value of Big Mac in USD)```
 
-Additional information and reading about the Big Mac Index can be found in the Credits and Collaborations section below.
-
-## Credits, Collaborations, and Resources
-### Consultants
-* Derrick Hwang - helping us identify the Big Mac Index as a solution.
-* Allie, Sam, John, Michelle, Brian, and Brook for their help with the Heroku Deployment issue.
-
-### Resources
-* The Economist - [Big Mac Index](https://www.statista.com/statistics/274326/big-mac-index-global-prices-for-a-big-mac/)
-* [Fixer](fixer.io) - Currency exchange rates - we purchased the preimum package to provide the best results.
-* [Rest Countries](restcountries.eu) - provided country capitals and flag URLs.
-* [Google Places](https://developers.google.com/places/web-service/intro) - multiple calls to generate results.
+Additional information and reading about the Big Mac Index can be found in the Credits and Collab

@@ -168,6 +168,8 @@ nav a:hover {
  
  @media screen and (min-width: 481px) {
 
+/* ****NAV MENU**** */
+
   nav {
     width: 90%;
     height: 60%;
@@ -181,21 +183,23 @@ nav a:hover {
  }
 
  .menu-content {
-  position: absolute;
-  display:none;
+  display: inherit;
+  /* position: absolute; */
   background-color: rgba(0, 0, 0, 0.60);
   box-shadow: 10px 10px 15px  rgba(0, 0, 0, 0.75);
-  
-  padding:10px;
- }
- nav li {
-   display:inline-block;
-   margin-right: 25px;
  }
 
-nav h3 {
-  color:white;
-}
+ nav ul {
+   display:flex;
+   justify-content: space-between;
+   align-content:center;
+ }
+
+ nav li {
+   margin: 0px;
+   padding: 0px 10px;
+   color:white;
+ }
 
 nav li h3:hover {
   color:rgb(245, 236, 114);
@@ -205,22 +209,15 @@ nav a {
   text-decoration: none;
 }
 
-nav a:hover {
-  background-color:#f9f9f9;
-}
-
-
 /* COUNTRY DECK */
- .title {
+.title {
   width: 40%;
   margin-left:10px;
   /* border:1px solid black; */
   text-align: center;
 }
 
-.menu-content {
-  display: inherit;
-}
+
 
 .deck {
   width:25%;
