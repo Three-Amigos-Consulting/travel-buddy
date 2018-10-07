@@ -7,11 +7,9 @@
 //Required Dependencies
 const express = require('express');
 const superagent = require('superagent');
-
 const pg = require('pg');
 
 require('dotenv').config();
-
 
 //Create an instance of express in the variable app
 const app = express();
@@ -26,7 +24,6 @@ app.use(express.urlencoded({ extended: true }));
 //Start database connection
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
-
 client.on('error', err => console.error(err));
 
 // Tell express to use EJS files
@@ -36,7 +33,6 @@ app.set('view engine', 'ejs');
 // Routes to listen
 // ++++++++++++++++
 
-// index.ejs
 app.get('/', renderHomePage);
 app.get('/explore', getSQL);
 app.get('/details/:id', getCountry);
@@ -44,14 +40,13 @@ app.get('/big-mac-index', renderBigMac)
 app.get('/aboutus', renderAboutUs);
 
 //Set the catch all route
-app.get('*', (request, response) => response.status(404).render('pages/404-error.ejs', { errorResult: '' }));
+app.get('*', (request, response) => response.status(404).render('pages/404-error'));
 
 // Activate the server
 app.listen(PORT, () => console.log(`(TRAVEL BUDDY) listening on: ${PORT}`));
 
-
 // +++++++++++++++++++++++++++++++++
-// Constructor functions
+//     Constructor functions
 // +++++++++++++++++++++++++++++++++
 
 function Countries(data) {
@@ -92,7 +87,6 @@ function getCurrency() {
 }
 
 // Get API info from RESTcountries to populate capital and flag_url info.  The function will receive information from our SQL database to limit the countries being requested.
-
 function getCapitalsAndFlags(data) {
   // For each country code we will add the code to a variable that appends to the end of the Restcountries API.
   console.log('*** Retrieving Capitals and Flags from API');
@@ -206,7 +200,6 @@ function getCountry(request, response) {
   getHotels(countryDetail)
     .then(() => getRestaurants(countryDetail)
       .then(() => {
-        // console.log(Hotels.allHotels)
         response.render('pages/detail/show', {
           country: countryDetail,
           restaurants: Restaurants.allRestaurants,
@@ -215,7 +208,6 @@ function getCountry(request, response) {
       }
       ))
     .catch(err => processErrors(err, response))
-
 }
 
 function getHotels(obj) {
@@ -279,7 +271,6 @@ function getRestaurants(obj) {
     })
 }
 
-
 function Restaurants(data) {
   this.name = data.name;
   this.price = data.price || 'Not Available';
@@ -302,8 +293,6 @@ function Hotels(data) {
 }
 
 Hotels.allHotels = [];
-
-
 
 // Error Handler
 function processErrors(err) {
