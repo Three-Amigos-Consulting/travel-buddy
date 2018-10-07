@@ -26,6 +26,47 @@ This project uses the following technologies:
 ## Database SCHEMA
 Database Schema can be found in [travel_budy_schema.sql](travel_budy_schema.sql)
 
+## File Structure
+.
+├── LICENSE
+├── package-lock.json
+├── package.json
+├── readme.md
+├── public
+|   ├── images
+|   |    ├── andyspic.jpg
+|   |    ├── big-mac-cropped.png
+|   |    ├── davidspic.jpg
+|   |    ├── oops-sign.png
+|   |    ├── passport-bkg.jpg
+|   |    ├── ryanspic.jpg
+|   |    └── worldmap-mobile.jpg
+|   |
+|   ├── js
+|   |    └── app.js
+|   ├── styles
+|   |    ├── base.css
+|   |    ├── layout.css
+|   |    ├── modules.css
+|   |    └── reset.css
+├── server.js
+├── travel_buddy_schema.sql
+└── views
+    ├── 404-error.ejs
+    ├── aboutus.ejs
+    ├── big-mac-index.ejs
+    ├── index.ejs   
+    └── pages
+        ├── detail
+        │   ├── detail.ejs
+        │   └── show.ejs
+        ├── explore
+        │   └── show.ejs
+        └── layout
+            ├── footer.ejs
+            ├── head.ejs
+            └── header.ejs
+
 ## Change Log
 #### 10-01-2018
 * (DC/AF/RM) - Finished standup and presented concepts to approval team.
