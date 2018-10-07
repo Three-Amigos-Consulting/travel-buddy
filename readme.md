@@ -26,6 +26,47 @@ This project uses the following technologies:
 ## Database SCHEMA
 Database Schema can be found in [travel_budy_schema.sql](travel_budy_schema.sql)
 
+## File Structure
+.
+├── LICENSE
+├── package-lock.json
+├── package.json
+├── readme.md
+├── public
+|   ├── images
+|   |    ├── andyspic.jpg
+|   |    ├── big-mac-cropped.png
+|   |    ├── davidspic.jpg
+|   |    ├── oops-sign.png
+|   |    ├── passport-bkg.jpg
+|   |    ├── ryanspic.jpg
+|   |    └── worldmap-mobile.jpg
+|   |
+|   ├── js
+|   |    └── app.js
+|   ├── styles
+|   |    ├── base.css
+|   |    ├── layout.css
+|   |    ├── modules.css
+|   |    └── reset.css
+├── server.js
+├── travel_buddy_schema.sql
+└── views
+    ├── 404-error.ejs
+    ├── aboutus.ejs
+    ├── big-mac-index.ejs
+    ├── index.ejs   
+    └── pages
+        ├── detail
+        │   ├── detail.ejs
+        │   └── show.ejs
+        ├── explore
+        │   └── show.ejs
+        └── layout
+            ├── footer.ejs
+            ├── head.ejs
+            └── header.ejs
+
 ## Change Log
 #### 10-01-2018
 * (DC/AF/RM) - Finished standup and presented concepts to approval team.
@@ -71,4 +112,15 @@ Our process calculates the value in USD based on the updated currency rates.
 
  ``` (Local Country Big Mac Cost) / (Local currency exchange rate with USD) = (Value of Big Mac in USD)```
 
-Additional information and reading about the Big Mac Index can be found in the Credits and Collab
+Additional information and reading about the Big Mac Index can be found in the Credits and Collaborations section below.
+
+## Credits, Collaborations, and Resources
+### Consultants
+* Derrick Hwang - helping us identify the Big Mac Index as a solution.
+* Allie, Sam, John, Michelle, Brian, and Brook for their help with the Heroku Deployment issue.
+
+### Resources
+* The Economist - [Big Mac Index](https://www.statista.com/statistics/274326/big-mac-index-global-prices-for-a-big-mac/)
+* [Fixer](fixer.io) - Currency exchange rates - we purchased the preimum package to provide the best results.
+* [Rest Countries](restcountries.eu) - provided country capitals and flag URLs.
+* [Google Places](https://developers.google.com/places/web-service/intro) - multiple calls to generate results.
