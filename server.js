@@ -74,7 +74,6 @@ function renderAboutUs(request, response) { response.render('pages/aboutus'); }
 
 // Get the API info for currency from fixer.io and returns an array of arrays with currency code and exchange rate in each array.
 function getCurrency() {
-  console.log('** Retrieving Currency from API');
   const url = `https://data.fixer.io/api/latest?access_key=${process.env.FIXER_API_KEY}&base=USD`;
 
   let ratesArray = [];
@@ -89,8 +88,6 @@ function getCurrency() {
 // Get API info from RESTcountries to populate capital and flag_url info.  The function will receive information from our SQL database to limit the countries being requested.
 function getCapitalsAndFlags(data) {
   // For each country code we will add the code to a variable that appends to the end of the Restcountries API.
-  console.log('*** Retrieving Capitals and Flags from API');
-
   let countryCodes = '';
 
   data.forEach(country => {
@@ -112,8 +109,6 @@ function getCapitalsAndFlags(data) {
 
 // Retrieve the data from the SQL server and update it with the API info
 function getSQL(request, response) {
-  console.log('* Retrieving stored data from SQL Server');
-
   const SQL = `SELECT * FROM countries;`;
 
   let countriesDB = [];
@@ -124,11 +119,13 @@ function getSQL(request, response) {
   client.query(SQL)
     // First get the data from the SQL server
     .then(results => countriesDB = results.rows)
+
     // Use the SQL data to help get capitals and flags
     .then(countries => getCapitalsAndFlags(countries))
     .then(capsAndFlags => {
       capitalsAndFlags = capsAndFlags;
     })
+
     // Get the current currency rates
     .then(getCurrency)
     .catch(err => processErrors(err))
@@ -136,6 +133,7 @@ function getSQL(request, response) {
       currency = rates;
     })
     .catch(err => processErrors(err))
+
     // Update data with the retrived information and calculate the current Big Mac Index for each country
     .then(() => {
       countriesDB.forEach(country => {
@@ -157,6 +155,7 @@ function getSQL(request, response) {
     })
     // Save updated data back to database
     .then(() => updateCountryDb())
+
     // Render the results of the updated information
     .then(() => showExplore(request, response))
     .catch(err => processErrors(err, response));
@@ -164,10 +163,6 @@ function getSQL(request, response) {
 
 // Saves the updated data back to the SQL Server
 function updateCountryDb() {
-  console.log('**** UPDATING SQL Database');
-
-  // console.log(Countries.allCountries);
-
   Countries.allCountries.forEach(country => {
     let { id, country_name, capital, country_code, currency_code, exchange_rate, local_bmi, usa_bmi, flag_url, created_date } = country;
 
@@ -180,8 +175,6 @@ function updateCountryDb() {
 }
 
 function showExplore(request, response) {
-  console.log('***** Preparing to render results');
-
   // sort the countries by Big Mac Index first
   Countries.allCountries.sort((a, b) => a.usa_bmi - b.usa_bmi);
 
@@ -189,13 +182,10 @@ function showExplore(request, response) {
 }
 
 function getCountry(request, response) {
-  console.log('\n\n# Retrieiving the requested country');
-
   const requestedId = parseInt(request.params.id);
   let countryDetail = Countries.allCountries.find(value => {
     return value.id === requestedId;
   })
-  console.log(countryDetail);
 
   getHotels(countryDetail)
     .then(() => getRestaurants(countryDetail)
@@ -211,7 +201,6 @@ function getCountry(request, response) {
 }
 
 function getHotels(obj) {
-  console.log('Getting Hotel Function');
   const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=hotels+in+${obj.capital},${obj.country_name}&key=${process.env.GOOGLE_API_KEY}`
 
   return superagent(url)
@@ -219,7 +208,6 @@ function getHotels(obj) {
       let hotelData = [];
       Hotels.allHotels = [];
       result.body.results.forEach(data => {
-        // console.log(data);
         hotelData.push({
           name: data.name,
           rating: data.rating,
@@ -232,17 +220,13 @@ function getHotels(obj) {
       hotelData.forEach(hotel => {
         Hotels.allHotels.push(new Hotels(hotel));
       })
-      // console.log(Hotels.allHotels.length)
       Hotels.allHotels.sort((a, b) => b.rating - a.rating);
       Hotels.allHotels.length = 5;
-      // console.log(Hotels.allHotels);
-      // return hotelData;
     })
     .catch(err => processErrors(err));
 }
 
 function getRestaurants(obj) {
-  console.log('Getting Restaurant Function')
   const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+${obj.capital},${obj.country_name}&key=${process.env.GOOGLE_API_KEY}`
 
   return superagent(url)
@@ -260,13 +244,10 @@ function getRestaurants(obj) {
           longitude: data.geometry.location.lng,
         });
       })
-      // console.log(foodData);
       foodData.forEach(food => {
         Restaurants.allRestaurants.push(new Restaurants(food));
       })
-      // console.log(Restaurants.allRestaurants.length)
       Restaurants.allRestaurants.sort((a, b) => b.rating - a.rating);
-      // console.log(Restaurants.allRestaurants);
       Restaurants.allRestaurants.length = 5;
     })
 }
