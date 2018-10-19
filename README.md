@@ -103,6 +103,10 @@ Database Schema can be found in [travel_budy_schema.sql](travel_budy_schema.sql)
 * (DC/RM/AF) - Finished up CSS styling for desktop.
 * (DC/RM/AF) - Practiced presentation.
 
+### 10-12-2018
+* (DC) - Cleaned up console.log entries and corpse code
+
+
 ## The Big Mac Index
 Currency exchange rates alone are not enough to determine the value of the US Dollar (USD) in other countries because the spending power of the local currency will vary from country to country.  This creates a need to find a common product that is consistent from country to country and do a comparison of its value in USD. 
 
